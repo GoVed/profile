@@ -1,0 +1,45 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+}
+
+.content{
+    width:calc(100% - 160px);
+}
+
+.header {
+    background-color:rgb(240, 240, 240);
+    margin: 0%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 20px;
+}
+
+.sidebar{
+    position: fixed;
+    height: 100%;
+    width: 160px;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color:rgb(24, 24, 24);
+    overflow-x: hidden;
+    text-align: center;
+    padding-top: 20px;
+    color: white;
+}
+
+.sidebarItem{
+    display: inline-block;
+    background-color:rgb(50, 50, 50);
+    padding: 5px;
+    margin: 0px;
+    
+    width:100%;
+}
+
+#innerContent {
+    padding: 10px;
+}
