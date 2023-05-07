@@ -1,12 +1,19 @@
 html, body {
+    overflow: hidden;
     height: 100%;
     width: 100%;
     padding: 0%;
     margin: 0%;
+    font-family: system-ui;
 }
 
-.content{
+#content{
+    display: flex;
+    flex-flow: column;
     width:calc(100% - 160px);
+    height: 100%;
+    transition: width 1s;
+    transition-timing-function: ease-in-out;
 }
 
 .header {
@@ -15,13 +22,13 @@ html, body {
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 20px;
+    font-size: 1em;
 }
 
-.sidebar{
+#sidebar{
     position: fixed;
     height: 100%;
     width: 160px;
-    z-index: 1;
     top: 0;
     right: 0;
     background-color:rgb(24, 24, 24);
@@ -29,17 +36,52 @@ html, body {
     text-align: center;
     padding-top: 20px;
     color: white;
+    transition: width 1s;
+    transition-timing-function: ease-in-out;
 }
 
 .sidebarItem{
     display: inline-block;
     background-color:rgb(50, 50, 50);
-    padding: 5px;
-    margin: 0px;
-    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    font-size: 1em;
     width:100%;
+    color: transparent;  
+    text-shadow: 0 0 0 white;
+
 }
 
 #innerContent {
-    padding: 10px;
+    padding: 0px;
+    height: 100%;
 }
+
+#gravityBall {
+    padding: 0%;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+#sidebar.collapseSidebar {
+    width: 50px;
+}
+
+#sidebar.expandSidebar {
+    width: 160px;
+}
+    
+#content.collapseContent {
+    width: calc(100% - 160px);
+}
+
+#content.expandContent {
+    width: calc(100% - 50px);
+}
+    
+    

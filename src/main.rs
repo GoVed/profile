@@ -3,6 +3,7 @@ use rocket::response::status::NotFound;
 use rocket::fs::NamedFile;
 use std::path::PathBuf;
 
+
 #[get("/")]
 async fn root() -> Result<NamedFile, NotFound<String>> {
     NamedFile::open("site/index.html")

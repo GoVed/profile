@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
     <link rel="stylesheet" href="style.css">
     <script src="anim.js"></script>
+    <script src="contentPage.js"></script>
+  
     <body>
-        <div class="content">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <div id="content">
             <div class="header">
                 <h1 id="title">Ved Suthar</h1>
             </div>
@@ -10,9 +13,13 @@
                 The content will be loaded here
             </div>
         </div>
-        <div class="sidebar">
-            ☰<br><br>
-            <span class="sidebarItem" id="profileItem1">Profile</span>
+        <div id="sidebar">
+            <span onclick="collapseSidebar()">☰</span>
+            <br><br>
+            <span class="sidebarItem" id="profileItem1" onClick="setInnerContent('profile.html')">Profile</span>
+            <span class="sidebarItem" id="profileItem2" onClick="setInnerContent('projects.html')">Projects</span>
         </div>      
     </body>
+
+    <script src="profileContent.js"></script>
 </html>
