@@ -1,5 +1,3 @@
 [global]
 address = "0.0.0.0"
 
-[development]
-address = "0.0.0.0"

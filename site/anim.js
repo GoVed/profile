@@ -1,38 +1,80 @@
+/*
+    @param result: End string to be shown
+    @param element: Element to be animated
+    @returns Nothing
+
+    Animates the element to show the result
+*/
 async function startMakeAnim(result,element){
+    //Calculating resolution for animation in time 
+    const totalTime=500
     const res=10
     const cps=(Array.from(result).length-1)/res    
-    for(var i=1;i<=res;i++){     
+
+
+    for(var i=1;i<=res;i++){  
+        //Intital starting original substring of result   
         var out=Array.from(result).slice(0, cps*i).join('')   
+
+        //Random chars after initial part
         out+=getRandomChar(cps)
+
+        //Clip to max length
         if(out.length>result.length)        
             out=Array.from(out).slice(0, Array.from(result).length).join('')
+
+        //For visual purpose
         if (out.length==0)
             out=result 
+
         element.innerHTML=out
-        await delay(500/res)
+        await delay(totalTime/res)
     }
     
+    //After the animation
     element.innerHTML=result
 }
 
+/*
+    @param element: Element to be animated
+    @returns Nothing
+
+    Animates the element to remove the result
+*/
 async function startDelAnim(element){
     var result=element.innerHTML;
+
+    //Calculating resolution for animation in time 
+    const totalTime=500
     const res=10
-    const cps=(Array.from(result).length-1)/res    
+    const cps=(Array.from(result).length-1)/res
+
     for(var i=1;i<=res;i++){        
+        //Intital starting original substring of result
         var out=Array.from(result).slice(0, Array.from(result).length-cps*i).join('')
+        //Random chars after initial part
         out+=getRandomChar(cps)
+        //Clip to max length
         if(out.length>result.length)
             out=Array.from(out).slice(0, Array.from(result).length).join('')
+        //For visual purpose
         if (out.length==0)
             out=result
+
         element.innerHTML=out
-        await delay(500/res)
+        await delay(totalTime/res)
     }
     
+    //After the animation
     element.innerHTML="⠀";
 }
 
+/*
+    @param Nothing
+    @returns Nothing
+
+    Animates the sidebar to expand
+*/
 async function expandSidebar(){
     
     document.getElementById("sidebar").classList.remove("collapseSidebar")
@@ -49,6 +91,12 @@ async function expandSidebar(){
     }
 }
 
+/*
+    @param Nothing
+    @returns Nothing
+
+    Animates the sidebar to collapse
+*/
 async function collapseSidebar(){
     
     
@@ -66,12 +114,25 @@ async function collapseSidebar(){
     }
 }
 
+/*
+    @param milliseconds: Time in milliseconds
+    @returns Promise
+
+    Returns a promise that resolves after the given time
+*/
 function delay(milliseconds){
     return new Promise(resolve => {
         setTimeout(resolve, milliseconds);
     });
 }
 
+
+/*
+    @param length: Length of random string
+    @returns String
+
+    Returns a random string of given length
+*/
 function getRandomChar(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -84,6 +145,12 @@ function getRandomChar(length) {
     return result;
 }
 
+/*
+    @param Nothing
+    @returns Nothing
+
+    Starts the animation on load
+*/
 window.onload = function(){
     var onloadAnimItems=[['Ved Suthar','title']]
     for(element in onloadAnimItems){
