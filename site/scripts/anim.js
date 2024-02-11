@@ -5,8 +5,10 @@
 
     Animates the element to show the result
 */
+var current_state = "";
+
 async function startMakeAnim(result,element){
-    //Calculating resolution for animation in time 
+    //Calculating temporal resolution for animation 
     const totalTime=500
     const res=10
     const cps=(Array.from(result).length-1)/res    
@@ -30,7 +32,7 @@ async function startMakeAnim(result,element){
         element.innerHTML=out
         await delay(totalTime/res)
     }
-    
+  
     //After the animation
     element.innerHTML=result
 }
@@ -42,6 +44,7 @@ async function startMakeAnim(result,element){
     Animates the element to remove the result
 */
 async function startDelAnim(element){
+    
     var result=element.innerHTML;
 
     //Calculating resolution for animation in time 
@@ -67,6 +70,7 @@ async function startDelAnim(element){
     
     //After the animation
     element.innerHTML="⠀";
+
 }
 
 /*
@@ -76,19 +80,18 @@ async function startDelAnim(element){
     Animates the sidebar to expand
 */
 async function expandSidebar(){
-    
+    if (current_state == "expanded") {
+        return;
+    }
     document.getElementById("sidebar").classList.remove("collapseSidebar")
     document.getElementById("content").classList.remove("expandContent")
     document.getElementById("sidebar").classList.add("expandSidebar")
     document.getElementById("content").classList.add("collapseContent")
     var animList=[['Profile','profileItem1'],['Projects','profileItem2']]
-    for(element in animList){
-        startDelAnim(document.getElementById(animList[element][1]))
-    }
-    await delay(500);
-    for(element in animList){
-        startMakeAnim(animList[element][0],document.getElementById(animList[element][1]))
-    }
+    await Promise.all(animList.map(element => startDelAnim(document.getElementById(element[1]))));
+
+    await Promise.all(animList.map(element => startMakeAnim(element[0], document.getElementById(element[1]))));
+    current_state = "expanded";
 }
 
 /*
@@ -98,20 +101,18 @@ async function expandSidebar(){
     Animates the sidebar to collapse
 */
 async function collapseSidebar(){
-    
-    
+    if (current_state == "collapsed") {
+        return;
+    }
     document.getElementById("sidebar").classList.remove("expandSidebar")
     document.getElementById("content").classList.remove("collapseContent")
     document.getElementById("sidebar").classList.add("collapseSidebar")
     document.getElementById("content").classList.add("expandContent")
     var animList=[['👤','profileItem1'],['📄','profileItem2']]
-    for(element in animList){
-        startDelAnim(document.getElementById(animList[element][1]))
-    }
-    await delay(500);
-    for(element in animList){
-        startMakeAnim(animList[element][0],document.getElementById(animList[element][1]))
-    }
+    await Promise.all(animList.map(element => startDelAnim(document.getElementById(element[1]))));
+
+    await Promise.all(animList.map(element => startMakeAnim(element[0], document.getElementById(element[1]))));
+    current_state = "collapsed";
 }
 
 /*
