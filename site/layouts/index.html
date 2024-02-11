@@ -3,7 +3,7 @@
     <script src="anim"></script>
     <script src="contentPage"></script>
   
-    <body>
+    <body onload="setInnerContent('profile',loadProfile)">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <div id="content">
             <div class="header">
@@ -16,7 +16,7 @@
         <div id="sidebar">
             <span onclick="collapseSidebar()">☰</span>
             <br><br>
-            <span class="sidebarItem" id="profileItem1" onClick="setInnerContent('profile')">Profile</span>
+            <span class="sidebarItem" id="profileItem1" onClick="setInnerContent('profile',loadProfile)">Profile</span>
             <span class="sidebarItem" id="profileItem2" onClick="setInnerContent('projects')">Projects</span>
         </div>      
     </body>

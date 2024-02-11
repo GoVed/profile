@@ -13,7 +13,7 @@ var py=-1;
 var mouseDownTime=0;
 var canvas = null;
 var ctx = null;
-
+var interval = null;
 /**
  * 
  * @param {Number} min 
@@ -43,7 +43,9 @@ function loadProfile(){
     canvas.addEventListener('touchmove', function(event) {
         mouseDown(event.touches[0].clientX,event.touches[0].clientY);
     });
-    setInterval(updateBall, 10);
+    
+    clearInterval(interval);
+    interval = setInterval(updateBall, 10);
 }
 
 /**
