@@ -152,7 +152,7 @@ function getRandomChar(length) {
 
     Starts the animation on load
 */
-window.onload = function(){
+function set_sidebar_anim(){
     var onloadAnimItems=[['Ved Suthar','title']]
     for(element in onloadAnimItems){
         startMakeAnim(onloadAnimItems[element][0],document.getElementById(onloadAnimItems[element][1]))
