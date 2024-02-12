@@ -15,6 +15,7 @@ lazy_static! {
         valid_paths.insert("contentPage", "site/scripts/contentPage.js");
         valid_paths.insert("profileContent", "site/scripts/profileContent.js");
         valid_paths.insert("style", "site/styles/style.css");
+        valid_paths.insert("projects", "site/layouts/projects.html");
         valid_paths
     };
 }
