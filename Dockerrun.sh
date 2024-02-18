@@ -1,0 +1,1 @@
+sudo docker run -p 80:8000 -v ~/Desktop/profile:/profile -w /profile rust cargo run
