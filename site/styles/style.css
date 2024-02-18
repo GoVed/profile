@@ -95,11 +95,14 @@ html, body {
 .project-card {
     width: 300px;
     height: 200px;
-    background-color: #f2f2f2;
+    background-color: #777777;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover; 
 }
 
 .project-card:hover {
@@ -111,7 +114,7 @@ html, body {
 }
 
 .project-card:hover .project-description {
-    color: #666666;
+    color: #fefefe;
 }
 
 .project-card:hover .project-image {
@@ -121,13 +124,13 @@ html, body {
 .project-title {
     font-size: 20px;
     font-weight: bold;
-    color: #333333;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
 .project-description {
     font-size: 14px;
-    color: #999999;
+    color: #eeeeee;
     margin-bottom: 10px;
 }
 
