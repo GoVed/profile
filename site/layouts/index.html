@@ -14,10 +14,10 @@
             </div>
         </div>
         <div id="sidebar">
-            <span onclick="collapseSidebar()">☰</span>
+            <span onclick="collapseSidebar(true)">☰</span>
             <br><br>
-            <span class="sidebarItem" id="profileItem1" onClick="setInnerContent('profile',loadProfile)">Profile</span>
-            <span class="sidebarItem" id="profileItem2" onClick="setInnerContent('projects')">Projects</span>
+            <span class="sidebarItem" id="profileItem1" onClick="setInnerContent('profile',loadProfile);collapseSidebar(true)">Profile</span>
+            <span class="sidebarItem" id="profileItem2" onClick="setInnerContent('projects');collapseSidebar(true)">Projects</span>
         </div>      
     </body>
 
