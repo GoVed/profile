@@ -1,6 +1,6 @@
-ballX = getRandomInt(50, 500);
-ballY = getRandomInt(25, 75);
-ballAx = getRandomInt(-10, 10);
+ballX = 0;
+ballY = 0;
+ballAx = 0;
 ballAy = 0;
 ballRadius=25;
 gravity = 0.1;
@@ -44,6 +44,11 @@ function loadProfile(){
         mouseDown(event.touches[0].clientX,event.touches[0].clientY);
     });
     
+    ballX = getRandomInt(50, 500);
+    ballY = getRandomInt(25, 75);
+    ballAx = getRandomInt(-10, 10);
+    ballAy = 0;
+
     clearInterval(interval);
     interval = setInterval(updateBall, 10);
 }

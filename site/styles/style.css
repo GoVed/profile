@@ -92,6 +92,10 @@ html, body {
     padding-top: 25px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .project-card {
     width: 300px;
     height: 200px;
