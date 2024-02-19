@@ -10,7 +10,8 @@ friction=0.01;
 bottomPadding=25;
 var px=-1;
 var py=-1;
-var mouseDownTime=0;
+var mouseDownTime=new Date().getTime();
+var init_time=new Date().getTime();
 var canvas = null;
 var ctx = null;
 var interval = null;
@@ -49,8 +50,8 @@ function loadProfile(){
     ballAx = getRandomInt(-10, 10);
     ballAy = 0;
 
-    clearInterval(interval);
-    interval = setInterval(updateBall, 10);
+    cancelAnimationFrame(interval);
+    updateBall();
 }
 
 /**
@@ -62,10 +63,10 @@ function loadProfile(){
  * Updates the ball acceleration based on mouse movement
  */
 function mouseDown(x,y){
-    if(new Date().getTime() - mouseDownTime < 100){
-        
-        ballAx += (x - px)/10;
-        ballAy += (y - py)/10;
+    delta = new Date().getTime() - mouseDownTime;
+    if(delta < 100){
+        ballAx += (x - px) * delta/100;
+        ballAy += (y - py) * delta/100;
     }
 
     mouseDownTime = new Date().getTime();
@@ -133,41 +134,63 @@ function getLines(ctx, text, maxWidth) {
  * Updates the ball position and draws the ball and the ground
  */
 function updateBall(){
+    delta = new Date().getTime() - init_time;
+    if(delta>1000)
+        delta=1000;
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight-10;
     ctx.fillStyle = 'rgba(255, 255, 255, .05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ballX += ballAx;
-    ballY += ballAy;
+    ballX += ballAx * delta/10;
+    ballY += ballAy * delta/10;
+
+    //Collision detection
+    //If the ball hits the ground
     if(ballY > canvas.height - ballRadius - bottomPadding){
         ballY = canvas.height - ballRadius - bottomPadding;
-        ballAy = -ballAy*damping;
+        ballAy = -ballAy * damping;
     }
+
+    //If the ball hits the ceiling
     if(ballY < ballRadius){
         ballY = ballRadius;
-        ballAy = -ballAy*damping;
+        ballAy = -ballAy * damping;
     }
+
+    //If the ball hits the right wall
     if(ballX > canvas.width - ballRadius){
         ballX = canvas.width - ballRadius;
-        ballAx = -ballAx*damping;
+        ballAx = -ballAx * damping;
     }
+
+    //If the ball hits the left wall
     if(ballX < ballRadius){
         ballX = ballRadius;
-        ballAx = -ballAx*damping;
+        ballAx = -ballAx * damping ;
     }
-    ballAy += gravity;
+
+    // Calculate the new acceleration
+    ballAy += (gravity * delta/10);
+
+    // Apply friction
     if(Math.abs(ballAx) < threshold)
         ballAx = 0;
-    if(Math.abs(ballAy) < threshold){
+    if(Math.abs(ballAy) < threshold && ballY == canvas.height - ballRadius - bottomPadding){
         ballAy = 0;
-        ballAx -= ballAx*friction;
+        ballAx -= ballAx * friction * delta/10;
     }
+
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    
+
+    // Draw the ball and the ground
     drawGround();
     drawBall();
     drawText();
+
+    // Call the next frame
+    init_time = new Date().getTime();
+    interval = requestAnimationFrame(updateBall);
 }
 
 /**
