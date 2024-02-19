@@ -175,6 +175,20 @@ function getRandomChar(length) {
     @param Nothing
     @returns Nothing
 
+    Toggles the sidebar
+*/
+function toggleSidebar() {
+    if (current_state == "expanded") {
+        collapseSidebar(true);
+    } else {
+        expandSidebar();
+    }
+}
+
+/*
+    @param Nothing
+    @returns Nothing
+
     Starts the animation on load
 */
 function set_sidebar_anim(){
@@ -184,6 +198,5 @@ function set_sidebar_anim(){
     }
     document.getElementById("sidebar").addEventListener("mouseover",expandSidebar);
     document.getElementById("sidebar").addEventListener("mouseleave",collapseSidebar);
-    collapseSidebar();
-    
+    collapseSidebar(); 
 }
