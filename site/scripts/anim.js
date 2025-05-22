@@ -1,143 +1,133 @@
-/*
-    @param result: End string to be shown
-    @param element: Element to be animated
-    @returns Nothing
+class Animator {
+    constructor(element) {
+        this.element = element;
+        this.currentState = "";
+        this.targetState = "";
+    }
 
-    Animates the element to show the result
-*/
-var current_state = "";
+    /*
+        @param target: End string to be shown
+        @returns Nothing
 
-async function startMakeAnim(result,element){
-    //Calculating temporal resolution for animation 
-    const totalTime=500
-    const res=10
-    const cps=(Array.from(result).length-1)/res    
+        Animates the element to show the target string
+    */
+    async targetAnimation(target) {
+        this.targetState = target;
+        const totalTime = 500;
+        const res = 10;
+        const startState = this.element.innerHTML;
+        let commonStartLength = 0;
+        while (commonStartLength < startState.length && commonStartLength < target.length && startState[commonStartLength] === target[commonStartLength]) {
+            commonStartLength++;
+        }
 
-    start_state = current_state;
-    for(var i=1;i<=res;i++){  
-        //Intital starting original substring of result   
-        var out=Array.from(result).slice(0, cps*i).join('')   
+        const startRemaining = startState.substring(commonStartLength);
+        const targetRemaining = target.substring(commonStartLength);
 
-        //Random chars after initial part
-        out+=getRandomChar(cps)
+        const diffLength = Math.abs(startRemaining.length - targetRemaining.length);
+        const cps = diffLength / res;
 
-        //Clip to max length
-        if(out.length>result.length)        
-            out=Array.from(out).slice(0, Array.from(result).length).join('')
+        for (var i = 1; i <= res; i++) {
+            if (this.targetState !== target) {
+                return;
+            }
 
-        //For visual purpose
-        if (out.length==0)
-            out=result 
+            let out = startState.substring(0, commonStartLength);
+            const currentDiff = Math.round(cps * i);
 
-        element.innerHTML=out
-        await delay(totalTime/res)
-        if (start_state != current_state) {
-            return;
+            if (startRemaining.length > targetRemaining.length) {
+                // Removing characters
+                const currentStartRemaining = Array.from(startRemaining).slice(0, startRemaining.length - currentDiff).join('');
+                out += currentStartRemaining;
+                if (out.length < target.length) { // If we removed too many, add back from target
+                    out = target.substring(0, out.length);
+                }
+                out += getRandomChar(1);
+            } else {
+                // Adding characters
+                const currentTargetRemaining = Array.from(targetRemaining).slice(0, currentDiff).join('');
+                out += currentTargetRemaining;
+                if (out.length < target.length) { // If we haven't added enough, add a random char
+                    out += getRandomChar(1);
+                }
+            }
+            if (out.length > Math.max(startState.length, target.length))
+                out = Array.from(out).slice(0, Math.max(startState.length, target.length)).join('');
+
+            this.element.innerHTML = out;
+            await delay(totalTime / res);
+        }
+
+        //After the animation
+        this.element.innerHTML = target;
+    }
+}
+
+class SidebarAnimator {
+    constructor() {
+        this.sidebar = document.getElementById("sidebar");
+        this.content = document.getElementById("content");
+        this.profileItems = [new Animator(document.getElementById('profileItem1')), new Animator(document.getElementById('profileItem2'))];
+    }
+
+    /*
+        @returns Nothing
+
+        Animates the sidebar to expand
+    */
+    async expandSidebar() {
+        this.sidebar.classList.remove("collapseSidebar");
+        this.content.classList.remove("expandContent");
+        this.sidebar.classList.add("expandSidebar");
+        this.content.classList.add("collapseContent");
+
+        this.profileItems[0].targetAnimation('Profile');
+        this.profileItems[1].targetAnimation('Projects');
+    }
+
+    /*
+        @returns Nothing
+
+        Animates the sidebar to collapse
+    */
+    async collapseSidebar(manual = false) {
+        this.sidebar.classList.remove("expandSidebar");
+        this.content.classList.remove("collapseContent");
+        this.sidebar.classList.add("collapseSidebar");
+        this.content.classList.add("expandContent");
+        
+        this.profileItems[0].targetAnimation('👤');
+        this.profileItems[1].targetAnimation('📄');
+    }
+
+    /*
+        @returns Nothing
+
+        Toggles the sidebar
+    */
+    toggleSidebar() {
+        if (this.sidebar.classList.contains("expandSidebar")) {
+            this.collapseSidebar(true);
+        } else {
+            this.expandSidebar();
         }
     }
-  
-    //After the animation
-    element.innerHTML=result
-}
 
-/*
-    @param element: Element to be animated
-    @returns Nothing
+    /*
+        @returns Nothing
 
-    Animates the element to remove the result
-*/
-async function startDelAnim(element){
-    
-    var result=element.innerHTML;
+        Starts the animation on load
+    */
+    set_sidebar_anim() {
+        title = document.getElementById('title');
+        const titleAnimator = new Animator(title);
+        title.innerHTML = '';
+        titleAnimator.targetAnimation('Ved Suthar');
 
-    //Calculating resolution for animation in time 
-    const totalTime=500
-    const res=10
-    const cps=(Array.from(result).length-1)/res
-    start_state = current_state;
-    for(var i=1;i<=res;i++){        
-        //Intital starting original substring of result
-        var out=Array.from(result).slice(0, Array.from(result).length-cps*i).join('')
-        //Random chars after initial part
-        out+=getRandomChar(cps)
-        //Clip to max length
-        if(out.length>result.length)
-            out=Array.from(out).slice(0, Array.from(result).length).join('')
-        //For visual purpose
-        if (out.length==0)
-            out=result
-
-        element.innerHTML=out
-        await delay(totalTime/res)
-        if (start_state != current_state) {
-            return;
-        }
+        this.sidebar.addEventListener("mouseover", () => this.expandSidebar());
+        this.sidebar.addEventListener("mouseleave", () => this.collapseSidebar());
+        this.collapseSidebar();
     }
-    
-    //After the animation
-    element.innerHTML="⠀";
-
-}
-
-/*
-    @param Nothing
-    @returns Nothing
-
-    Animates the sidebar to expand
-*/
-async function expandSidebar(){   
-    if (current_state == "manual_collapsing") {
-        return;
-    }
-
-    document.getElementById("sidebar").classList.remove("collapseSidebar")
-    document.getElementById("content").classList.remove("expandContent")
-    document.getElementById("sidebar").classList.add("expandSidebar")
-    document.getElementById("content").classList.add("collapseContent")
-
-    if (current_state == "expanded" || current_state == "expanding") {
-        return;
-    }
-    current_state = "expanding"
-    
-    var animList=[['Profile','profileItem1'],['Projects','profileItem2']]
-    await Promise.all(animList.map(element => startDelAnim(document.getElementById(element[1]))));
-    if (current_state != "expanding") {
-        return;
-    }
-    current_state = "empty_expanding"
-    await Promise.all(animList.map(element => startMakeAnim(element[0], document.getElementById(element[1]))));
-    current_state = "expanded";
-}
-
-/*
-    @param Nothing
-    @returns Nothing
-
-    Animates the sidebar to collapse
-*/
-async function collapseSidebar(manual=false){
-    document.getElementById("sidebar").classList.remove("expandSidebar")
-    document.getElementById("content").classList.remove("collapseContent")
-    document.getElementById("sidebar").classList.add("collapseSidebar")
-    document.getElementById("content").classList.add("expandContent")
-
-    if (current_state == "collapsed" || current_state == "collapsing" || current_state == "manual_collapsing") {
-        return;
-    }
-    current_state = "collapsing"
-    if (manual == true ){
-        current_state = "manual_collapsing"
-    }
-    var animList=[['👤','profileItem1'],['📄','profileItem2']]
-
-    await Promise.all(animList.map(element => startDelAnim(document.getElementById(element[1]))));
-    if (current_state != "collapsing" && current_state != "manual_collapsing") {
-        return;
-    }
-    current_state = "empty_collapsing"
-    await Promise.all(animList.map(element => startMakeAnim(element[0], document.getElementById(element[1]))));
-    current_state = "collapsed";
 }
 
 /*
@@ -146,12 +136,13 @@ async function collapseSidebar(manual=false){
 
     Returns a promise that resolves after the given time
 */
-function delay(milliseconds){
+function delay(milliseconds) {
     return new Promise(resolve => {
         setTimeout(resolve, milliseconds);
     });
 }
 
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 /*
     @param length: Length of random string
@@ -161,42 +152,19 @@ function delay(milliseconds){
 */
 function getRandomChar(length) {
     let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+        counter += 1;
     }
     return result;
 }
-
-/*
-    @param Nothing
-    @returns Nothing
-
-    Toggles the sidebar
-*/
-function toggleSidebar() {
-    if (current_state == "expanded") {
-        collapseSidebar(true);
-    } else {
-        expandSidebar();
-    }
+let sidebarAnimator = null;
+function onLoadAnim() {
+    sidebarAnimator = new SidebarAnimator();
+    sidebarAnimator.set_sidebar_anim();    
 }
-
-/*
-    @param Nothing
-    @returns Nothing
-
-    Starts the animation on load
-*/
-function set_sidebar_anim(){
-    var onloadAnimItems=[['Ved Suthar','title']]
-    for(element in onloadAnimItems){
-        startMakeAnim(onloadAnimItems[element][0],document.getElementById(onloadAnimItems[element][1]))
-    }
-    document.getElementById("sidebar").addEventListener("mouseover",expandSidebar);
-    document.getElementById("sidebar").addEventListener("mouseleave",collapseSidebar);
-    collapseSidebar(); 
+function toggleSidebar() {
+    if (sidebarAnimator)
+        sidebarAnimator.toggleSidebar();
 }
