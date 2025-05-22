@@ -90,7 +90,7 @@ class SidebarAnimator {
 
         Animates the sidebar to collapse
     */
-    async collapseSidebar(manual = false) {
+    async collapseSidebar() {
         this.sidebar.classList.remove("expandSidebar");
         this.content.classList.remove("collapseContent");
         this.sidebar.classList.add("collapseSidebar");
@@ -167,4 +167,8 @@ function onLoadAnim() {
 function toggleSidebar() {
     if (sidebarAnimator)
         sidebarAnimator.toggleSidebar();
+}
+function collapseSidebar(){
+    if (sidebarAnimator)
+        sidebarAnimator.collapseSidebar();
 }
