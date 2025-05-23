@@ -1,4 +1,11 @@
 class Animator {
+    /**
+     * 
+     * @param {HTMLElement} element 
+     * @returns Nothing
+     * 
+     * Constructor for the Animator class
+     */
     constructor(element) {
         this.element = element;
         this.currentState = "";
@@ -64,7 +71,13 @@ class Animator {
 }
 
 class SidebarAnimator {
+    /**
+     * 
+     * @param Nothing
+     * @returns Nothing
+     */
     constructor() {
+        
         this.sidebar = document.getElementById("sidebar");
         this.content = document.getElementById("content");
         this.profileItems = [new Animator(document.getElementById('profileItem1')), new Animator(document.getElementById('profileItem2'))];
@@ -130,6 +143,11 @@ class SidebarAnimator {
     }
 }
 
+/**
+ * 
+ * @param {Number} milliseconds 
+ * @returns Promise
+ */
 /*
     @param milliseconds: Time in milliseconds
     @returns Promise
@@ -144,6 +162,11 @@ function delay(milliseconds) {
 
 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
+/**
+ * 
+ * @param {Number} length 
+ * @returns String
+ */
 /*
     @param length: Length of random string
     @returns String
@@ -159,15 +182,33 @@ function getRandomChar(length) {
     }
     return result;
 }
+/**
+ * @type {SidebarAnimator}
+ */
 let sidebarAnimator = null;
+/**
+ * 
+ * @param Nothing
+ * @returns Nothing
+ * 
+ * Starts the animation on load
+ */
 function onLoadAnim() {
     sidebarAnimator = new SidebarAnimator();
     sidebarAnimator.set_sidebar_anim();    
 }
+/**
+ * 
+ * @param Nothing
+ * @returns Nothing
+ */
 function toggleSidebar() {
     if (sidebarAnimator)
         sidebarAnimator.toggleSidebar();
 }
+/**
+ * @returns Nothing
+ */
 function collapseSidebar(){
     if (sidebarAnimator)
         sidebarAnimator.collapseSidebar();
