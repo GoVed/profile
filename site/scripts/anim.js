@@ -71,17 +71,6 @@ class Animator {
 }
 
 class SidebarAnimator {
-    /**
-     * 
-     * @param Nothing
-     * @returns Nothing
-     */
-    constructor() {
-        
-        this.sidebar = document.getElementById("sidebar");
-        this.content = document.getElementById("content");
-        this.profileItems = [new Animator(document.getElementById('profileItem1')), new Animator(document.getElementById('profileItem2'))];
-    }
 
     /*
         @returns Nothing
@@ -132,7 +121,7 @@ class SidebarAnimator {
         Starts the animation on load
     */
     set_sidebar_anim() {
-        title = document.getElementById('title');
+        let title = document.getElementById('title');
         const titleAnimator = new Animator(title);
         title.innerHTML = '';
         titleAnimator.targetAnimation('Ved Suthar');
@@ -140,6 +129,19 @@ class SidebarAnimator {
         this.sidebar.addEventListener("mouseover", () => this.expandSidebar());
         this.sidebar.addEventListener("mouseleave", () => this.collapseSidebar());
         this.collapseSidebar();
+    }
+
+    /**
+     * 
+     * @param Nothing
+     * @returns Nothing
+     */
+    constructor() {
+
+        this.sidebar = document.getElementById("sidebar");
+        this.content = document.getElementById("content");
+        this.profileItems = [new Animator(document.getElementById('profileItem1')), new Animator(document.getElementById('profileItem2'))];
+        this.set_sidebar_anim();
     }
 }
 
@@ -195,7 +197,6 @@ let sidebarAnimator = null;
  */
 function onLoadAnim() {
     sidebarAnimator = new SidebarAnimator();
-    sidebarAnimator.set_sidebar_anim();    
 }
 /**
  * 
