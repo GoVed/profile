@@ -17,6 +17,7 @@ lazy_static! {
         valid_paths.insert("style", "site/styles/style.css");
         valid_paths.insert("projects", "site/layouts/projects.html");
         valid_paths.insert("images", "site/images");
+        valid_paths.insert("robots.txt", "site/layouts/robots.txt");
         valid_paths
     };
 }
