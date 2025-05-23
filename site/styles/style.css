@@ -149,4 +149,8 @@ a {
 .social-links{
     margin-right: 15px;
 }
+
+.clickable {
+    cursor: pointer;
+}
     
