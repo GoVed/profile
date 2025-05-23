@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-    <link rel="stylesheet" href="style">
-    <script src="anim"></script>
-    <script src="contentPage"></script>
-  
-    <body onload="setInnerContent('profile',loadProfile);onLoadAnim();">
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <div id="content">
-            <div class="header">
-                <h1 id="title">Ved Suthar</h1>
-            </div>
-            <div id="innerContent">
-                The content will be loaded here
-            </div>
-        </div>
-        <div id="sidebar">
-            <span onclick="toggleSidebar()">☰</span>
-            <br><br>
-            <span class="sidebarItem" id="profileItem1" onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)">Profile</span>
-            <span class="sidebarItem" id="profileItem2" onclick="setInnerContent('projects');collapseSidebar(true)">Projects</span>
-        </div>      
-    </body>
+<link rel="stylesheet" href="style">
+<script src="anim"></script>
+<script src="contentPage"></script>
 
-    <script src="profileContent"></script>
+<body onload="setInnerContent('profile',loadProfile);onLoadAnim();">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <div id="content">
+        <div class="header" style="display: flex; align-items: center;">
+            <h1 id="title">Ved Suthar</h1>
+            <a href="https://www.linkedin.com/in/vedsuthar" target="_blank" rel="noopener noreferrer"
+                 style="margin-left: auto;" class="social-links">
+                <img src="images/InBug-Black.png" alt="LinkedIn Profile" width="50" height="50">
+            </a>
+            <a href="https://github.com/GoVed" target="_blank" rel="noopener noreferrer"
+                class="social-links">
+                <img src="images/github-mark.png" alt="Github Profile" width="50" height="50">
+            </a>
+        </div>
+
+
+        <div id="innerContent">
+            The content will be loaded here
+        </div>
+    </div>
+    <div id="sidebar">
+        <span onclick="toggleSidebar()">☰</span>
+        <br><br>
+        <span class="sidebarItem" id="profileItem1"
+            onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)">Profile</span>
+        <span class="sidebarItem" id="profileItem2"
+            onclick="setInnerContent('projects');collapseSidebar(true)">Projects</span>
+    </div>
+</body>
+
+<script src="profileContent"></script>
+
 </html>
