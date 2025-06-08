@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="style">
     <script src="anim"></script>
     <script src="contentPage"></script>
-    <script src="profileContent"></script>
+    <script type="module">
+        import { loadProfile } from './profileContent';
+        // Make loadProfile globally available for inline event handlers
+        window.loadProfile = loadProfile;
+    </script>
+    <!-- <script type="module" src="profileContent"></script> This line was previously suggested and is now handled by the inline module script above -->
 </head>
 
 
