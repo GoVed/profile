@@ -22,6 +22,7 @@ lazy_static! {
         valid_paths.insert("projects", "site/layouts/projects.html");
         valid_paths.insert("images", "site/images");
         valid_paths.insert("robots.txt", "site/layouts/robots.txt");
+        valid_paths.insert("AR_Gravity_Simulator_Privacy_Policy.html", "site/layouts/AR_Gravity_Simulator_Privacy_Policy.html");
         valid_paths
     };
 }
