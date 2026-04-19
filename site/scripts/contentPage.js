@@ -40,8 +40,13 @@ function setupScrollObserver() {
                     stopProfile();
                 }
                 
-                // Update sidebar active state if needed
-                console.log(`Now viewing: ${pageId}`);
+                // Update sidebar active state
+                document.querySelectorAll('.sidebarItem').forEach(item => {
+                    item.classList.remove('active-tab');
+                });
+                const index = pages.indexOf(pageId) + 1;
+                const activeItem = document.getElementById(`profileItem${index}`);
+                if (activeItem) activeItem.classList.add('active-tab');
             }
         });
     }, observerOptions);

@@ -77,12 +77,23 @@ html, body {
     background-color: var(--sidebar-item-bg);
     margin-top: 5px;
     margin-bottom: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     font-size: 1em;
     width: 100%;
     color: transparent;
     text-shadow: 0 0 0 var(--sidebar-text);
+    transition: background-color 0.3s ease, border-left 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.sidebarItem:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+.sidebarItem.active-tab {
+    background-color: rgb(100, 100, 100);
+    border-left: 4px solid #ff6600;
 }
 
 #innerContent {
