@@ -88,14 +88,26 @@ html, body {
 #innerContent {
     padding: 0px;
     height: 100%;
-    overflow: auto;
-    transition: opacity 0.3s ease-in-out;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.page-section {
+    height: 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 #gravityBall {
     padding: 0%;
-    height: 99%;
+    height: 100%;
     width: 100%;
+    display: block;
 }
 
 #sidebar.collapseSidebar {

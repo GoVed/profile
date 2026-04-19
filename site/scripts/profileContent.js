@@ -1,5 +1,5 @@
 import { canvasConfig } from './config';
-import { initBall, handleBallMouseDown, updateBallPhysics, drawBall } from './ball';
+import { initBall, handleBallMouseDown, updateBallPhysics, drawBall, isPointNearBall } from './ball';
 import { initGuy, updateGuyInteraction, drawGuy } from './guy';
 import { getLines } from './utils';
 
@@ -116,7 +116,7 @@ export function stopProfile() {
  * @returns Nothing
  *  Loads the profile page, sets up the canvas and starts the animation
  */
-export function loadProfile(){ // Export if called from another module (e.g. contentPage.js)
+export function loadProfile(){ 
     canvas = document.getElementById("gravityBall");
     if (!canvas) { console.error("Canvas #gravityBall not found."); return; }
     ctx = canvas.getContext("2d");
@@ -124,28 +124,64 @@ export function loadProfile(){ // Export if called from another module (e.g. con
 
     setupCanvas();
 
-    canvas.addEventListener('mousemove', function(event) {
-        if(event.buttons === 1) { // Primary button is down
+    let isCapturing = false;
+
+    // Use a unique set of listeners to avoid duplicates if loadProfile is called multiple times
+    const onMouseDown = function(event) {
+        const rect = canvas.getBoundingClientRect();
+        if (isPointNearBall(event.clientX - rect.left, event.clientY - rect.top)) {
+            isCapturing = true;
+        }
+    };
+
+    const onMouseUp = () => {
+        isCapturing = false;
+    };
+
+    const onMouseMove = function(event) {
+        if(event.buttons === 1 && isCapturing) {
             event.preventDefault();
             const rect = canvas.getBoundingClientRect();
             handleBallMouseDown(event.clientX - rect.left, event.clientY - rect.top);
         }
-    });
-    canvas.addEventListener('touchmove', function(event) {
-        event.preventDefault(); // Prevent scrolling
+    };
+
+    const onTouchStart = function(event) {
         if (event.touches.length > 0) {
+            const rect = canvas.getBoundingClientRect();
+            const touch = event.touches[0];
+            if (isPointNearBall(touch.clientX - rect.left, touch.clientY - rect.top)) {
+                isCapturing = true;
+            }
+        }
+    };
+
+    const onTouchMove = function(event) {
+        if (isCapturing && event.touches.length > 0) {
+            event.preventDefault(); 
             const rect = canvas.getBoundingClientRect();
             handleBallMouseDown(event.touches[0].clientX - rect.left, event.touches[0].clientY - rect.top);
         }
-    });
+    };
+
+    const onTouchEnd = () => {
+        isCapturing = false;
+    };
+
+    canvas.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd);
     
     const virtualWidth = canvas.width / (window.devicePixelRatio || 1);
-    initBall(virtualWidth); // Pass initial virtual width
+    initBall(virtualWidth); 
     initGuy();
 
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
     }
-    lastFrameTime = 0; // Reset for the new loop
+    lastFrameTime = 0; 
     animationFrameId = requestAnimationFrame(gameLoop);
 }

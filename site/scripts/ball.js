@@ -21,16 +21,26 @@ export function initBall(canvasWidth) {
     ballState.mouseDownTime = new Date().getTime();
 }
 
+export function isPointNearBall(x, y) {
+    const dx = x - ballState.x;
+    const dy = y - ballState.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < ballState.radius * 2; // Generous hit area
+}
+
 export function handleBallMouseDown(x, y) {
     let delta = new Date().getTime() - ballState.mouseDownTime;
+    let interacted = false;
     // Apply impulse if quick succession of mouse moves while button is down
     if (delta < 100 && ballState.px !== -1) { 
         ballState.ax += (x - ballState.px) * (delta / 1000) * ballConfig.sensitivity;
         ballState.ay += (y - ballState.py) * (delta / 1000) * ballConfig.sensitivity;
+        interacted = true;
     }
     ballState.mouseDownTime = new Date().getTime();
     ballState.px = x;
     ballState.py = y;
+    return interacted;
 }
 
 export function updateBallPhysics(timeStepFactor, canvas) {

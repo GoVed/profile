@@ -23,14 +23,11 @@
     <link rel="stylesheet" href="style">
     <script src="anim"></script>
     <script type="module">
-        import { loadProfile } from './profileContent';
-        import { setInnerContent } from './contentPage';
-        window.loadProfile = loadProfile;
-        window.setInnerContent = setInnerContent;
+        import { initAllPages, scrollToPage } from './contentPage';
+        window.scrollToPage = scrollToPage;
 
-        // Initialize content when the module loads
         document.addEventListener('DOMContentLoaded', () => {
-            setInnerContent('profile', loadProfile);
+            initAllPages();
             if (window.onLoadAnim) window.onLoadAnim();
         });
 
@@ -41,10 +38,10 @@
             });
         }
     </script>
-</head>
+    </head>
 
 
-<body>
+    <body>
     <div id="content">
         <div class="header" style="display: flex; align-items: center;">
             <h1 id="title">Ved Suthar</h1>
@@ -60,33 +57,36 @@
 
 
         <div id="innerContent">
-            Loading this guys's stuffs, sit tight...
+            <section id="profile-page" class="page-section"></section>
+            <section id="projects-page" class="page-section"></section>
+            <section id="skills-page" class="page-section"></section>
+            <section id="contact-page" class="page-section"></section>
         </div>
     </div>
     <div id="sidebar" role="navigation" aria-label="Main Navigation">
         <span onclick="toggleSidebar()" onkeypress="if(event.key==='Enter') toggleSidebar()" class="clickable" role="button" aria-label="Toggle Sidebar" tabindex="0">☰</span>
         <br><br>
         <span class="sidebarItem clickable" id="profileItem1"
-            onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)" 
-            onkeypress="if(event.key==='Enter') { setInnerContent('profile',loadProfile);collapseSidebar(true); }"
+            onclick="scrollToPage('profile-page')" 
+            onkeypress="if(event.key==='Enter') scrollToPage('profile-page')"
             onmouseenter="document.getElementById('content').classList.add('preview-peek')"
             onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Profile">Profile</span>
         <span class="sidebarItem clickable" id="profileItem2"
-            onclick="setInnerContent('projects');collapseSidebar(true)" 
-            onkeypress="if(event.key==='Enter') { setInnerContent('projects');collapseSidebar(true); }"
+            onclick="scrollToPage('projects-page')" 
+            onkeypress="if(event.key==='Enter') scrollToPage('projects-page')"
             onmouseenter="document.getElementById('content').classList.add('preview-peek')"
             onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Projects">Projects</span>
         <span class="sidebarItem clickable" id="profileItem3"
-            onclick="setInnerContent('skills');collapseSidebar(true)" 
-            onkeypress="if(event.key==='Enter') { setInnerContent('skills');collapseSidebar(true); }"
+            onclick="scrollToPage('skills-page')" 
+            onkeypress="if(event.key==='Enter') scrollToPage('skills-page')"
             onmouseenter="document.getElementById('content').classList.add('preview-peek')"
             onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Skills">Skills</span>
         <span class="sidebarItem clickable" id="profileItem4"
-            onclick="setInnerContent('contact');collapseSidebar(true)" 
-            onkeypress="if(event.key==='Enter') { setInnerContent('contact');collapseSidebar(true); }"
+            onclick="scrollToPage('contact-page')" 
+            onkeypress="if(event.key==='Enter') scrollToPage('contact-page')"
             onmouseenter="document.getElementById('content').classList.add('preview-peek')"
             onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Contact">Contact</span>
