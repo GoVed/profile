@@ -1,4 +1,4 @@
-import { stopProfile } from './profileContent.js';
+import { stopProfile } from './profileContent';
 
 const cache = new Map();
 

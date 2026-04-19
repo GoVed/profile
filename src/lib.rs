@@ -38,7 +38,7 @@ async fn root() -> Result<NamedFile, NotFound<String>> {
 async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
     let rel_path_str = path.to_str().unwrap_or("");
     let mut rel_path = rel_path_str;
-    let root_path: &str;
+    let mut root_path: &str;
     match rel_path.split_once('/') {
         Some((key, value)) => {
             root_path = key;
@@ -47,6 +47,15 @@ async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
         None => {
             root_path = rel_path;
             rel_path = "";
+        }
+    }
+
+    // Robust matching: strip extensions if not found
+    if !VALID_PATH.contains_key(root_path) {
+        if let Some(stripped) = root_path.strip_suffix(".js").or_else(|| root_path.strip_suffix(".css")) {
+            if VALID_PATH.contains_key(stripped) {
+                root_path = stripped;
+            }
         }
     }
 
