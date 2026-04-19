@@ -6,13 +6,12 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style">
     <script src="anim"></script>
-    <script src="contentPage"></script>
     <script type="module">
         import { loadProfile } from './profileContent';
-        // Make loadProfile globally available for inline event handlers
+        import { setInnerContent } from './contentPage';
         window.loadProfile = loadProfile;
+        window.setInnerContent = setInnerContent;
     </script>
-    <!-- <script type="module" src="profileContent"></script> This line was previously suggested and is now handled by the inline module script above -->
 </head>
 
 

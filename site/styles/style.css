@@ -81,6 +81,7 @@ html, body {
     padding: 0px;
     height: 100%;
     overflow: auto;
+    transition: opacity 0.3s ease-in-out;
 }
 
 #gravityBall {

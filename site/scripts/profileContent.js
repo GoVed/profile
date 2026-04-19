@@ -24,9 +24,11 @@ function getThemeColors() {
  */
 function drawProfileText(){ // Renamed to be more specific
     const colors = getThemeColors();
+    const dpr = window.devicePixelRatio || 1;
+    const virtualWidth = canvas.width / dpr;
     ctx.font = "1.5em Arial";
     ctx.fillStyle = colors.text;
-    const lines = getLines(ctx, canvasConfig.profileText, canvas.width - 40);
+    const lines = getLines(ctx, canvasConfig.profileText, virtualWidth - 40);
     for (var i = 0; i < lines.length; i++) {
         ctx.fillText(lines[i], 10, 40 + i * 40);
     }
@@ -40,11 +42,25 @@ function drawProfileText(){ // Renamed to be more specific
  */
 function drawGround(){
     const colors = getThemeColors();
+    const dpr = window.devicePixelRatio || 1;
+    const virtualWidth = canvas.width / dpr;
+    const virtualHeight = canvas.height / dpr;
     ctx.beginPath();
     ctx.strokeStyle = colors.stroke;
-    ctx.moveTo(0, canvas.height - canvasConfig.bottomPadding);
-    ctx.lineTo(canvas.width, canvas.height - canvasConfig.bottomPadding);
+    ctx.moveTo(0, virtualHeight - canvasConfig.bottomPadding);
+    ctx.lineTo(virtualWidth, virtualHeight - canvasConfig.bottomPadding);
     ctx.stroke();
+}
+
+function setupCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    
+    ctx.resetTransform();
+    ctx.scale(dpr, dpr);
 }
 
 function gameLoop(currentTime) {
@@ -60,23 +76,39 @@ function gameLoop(currentTime) {
 
     let timeStepFactor = deltaTime / 10.0;
 
-    if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight -10) {
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight - 10;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    if (canvas.width !== rect.width * dpr || canvas.height !== (rect.height - 10) * dpr) {
+         setupCanvas();
     }
     
-    updateBallPhysics(timeStepFactor, canvas);
-    updateGuyInteraction(timeStepFactor, canvas);
+    const virtualWidth = canvas.width / dpr;
+    const virtualHeight = canvas.height / dpr;
+
+    updateBallPhysics(timeStepFactor, { width: virtualWidth, height: virtualHeight });
+    updateGuyInteraction(timeStepFactor, { width: virtualWidth, height: virtualHeight });
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, virtualWidth, virtualHeight);
 
     drawGround();
-    drawBall(ctx); // Pass ctx
+    drawBall(ctx);
     drawProfileText();
-    drawGuy(ctx, canvas); // Pass ctx (canvas is already passed)
+    drawGuy(ctx, { width: virtualWidth, height: virtualHeight });
 
     lastFrameTime = currentTime;
     animationFrameId = requestAnimationFrame(gameLoop);
+}
+
+/**
+ * @param Nothing
+ * @returns Nothing
+ *  Stops the animation loop
+ */
+export function stopProfile() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
 }
 
 /**
@@ -90,20 +122,25 @@ export function loadProfile(){ // Export if called from another module (e.g. con
     ctx = canvas.getContext("2d");
     if (!ctx) { console.error("Failed to get 2D context."); return; }
 
+    setupCanvas();
+
     canvas.addEventListener('mousemove', function(event) {
         if(event.buttons === 1) { // Primary button is down
             event.preventDefault();
-            handleBallMouseDown(event.clientX - canvas.getBoundingClientRect().left, event.clientY - canvas.getBoundingClientRect().top);
+            const rect = canvas.getBoundingClientRect();
+            handleBallMouseDown(event.clientX - rect.left, event.clientY - rect.top);
         }
     });
     canvas.addEventListener('touchmove', function(event) {
         event.preventDefault(); // Prevent scrolling
         if (event.touches.length > 0) {
-            handleBallMouseDown(event.touches[0].clientX - canvas.getBoundingClientRect().left, event.touches[0].clientY - canvas.getBoundingClientRect().top);
+            const rect = canvas.getBoundingClientRect();
+            handleBallMouseDown(event.touches[0].clientX - rect.left, event.touches[0].clientY - rect.top);
         }
     });
     
-    initBall(canvas.width); // Pass initial canvas width
+    const virtualWidth = canvas.width / (window.devicePixelRatio || 1);
+    initBall(virtualWidth); // Pass initial virtual width
     initGuy();
 
     if (animationFrameId) {

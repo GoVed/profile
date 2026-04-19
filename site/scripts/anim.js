@@ -61,12 +61,12 @@ class Animator {
             if (out.length > Math.max(startState.length, target.length))
                 out = Array.from(out).slice(0, Math.max(startState.length, target.length)).join('');
 
-            this.element.innerHTML = out;
+            this.element.textContent = out;
             await delay(totalTime / res);
         }
 
         //After the animation
-        this.element.innerHTML = target;
+        this.element.textContent = target;
     }
 }
 
@@ -123,7 +123,7 @@ class SidebarAnimator {
     set_sidebar_anim() {
         let title = document.getElementById('title');
         const titleAnimator = new Animator(title);
-        title.innerHTML = '';
+        title.textContent = '';
         titleAnimator.targetAnimation('Ved Suthar');
 
         this.sidebar.addEventListener("mouseover", () => this.expandSidebar());
