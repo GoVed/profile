@@ -31,12 +31,13 @@ lazy_static! {
 async fn root() -> Result<NamedFile, NotFound<String>> {
     NamedFile::open("site/layouts/index.html")
     .await
-    .map_err(|e| NotFound(e.to_string()))
+    .map_err(|_| NotFound("Not Found".to_string()))
 }
     
 #[get("/<path..>")]
 async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
-    let mut rel_path = path.to_str().unwrap();
+    let rel_path_str = path.to_str().unwrap_or("");
+    let mut rel_path = rel_path_str;
     let root_path: &str;
     match rel_path.split_once('/') {
         Some((key, value)) => {
@@ -48,19 +49,18 @@ async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
             rel_path = "";
         }
     }
-    println!("Root path: {}", root_path);
-    println!("Relative path: {}", rel_path);
+
     if root_path == "" || !VALID_PATH.contains_key(root_path){
         NamedFile::open("site/layouts/index.html")
         .await
-        .map_err(|e| NotFound(e.to_string()))
+        .map_err(|_| NotFound("Not Found".to_string()))
     }
     else{
         let mut real_path = PathBuf::from(VALID_PATH.get(root_path).unwrap());
         if rel_path != "" {
             real_path.push(rel_path);
         }
-        NamedFile::open(real_path).await.map_err(|e| NotFound(e.to_string()))    
+        NamedFile::open(real_path).await.map_err(|_| NotFound("Not Found".to_string()))    
     }
     
 }

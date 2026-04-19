@@ -1,2 +1,6 @@
+.git
 .vscode
 target
+Dockerfile
+Rocket.toml
+Cargo.lock
