@@ -5,6 +5,7 @@ export const ballConfig = {
     damping: 0.9,
     threshold: 0.1,
     friction: 0.01,
+    sensitivity: 2.5, // Added for easier adjustment
 };
 
 export const guyConfig = {
@@ -12,6 +13,9 @@ export const guyConfig = {
     ballSlowThreshold: 0.5,
     throwImpulseY: 7,
     throwImpulseX: 3,
+    jumpStrength: 5,
+    jumpChance: 0.01,
+    blinkChance: 0.02,
     // Chibi Proportions
     headRadius: 10,
     bodyWidth: 15,
@@ -24,9 +28,9 @@ export const guyConfig = {
     // Animation
     animSpeed: 12,
     idleAnimSpeed: 70,
-    idleAnimMaxFrames: 5,
+    idleAnimMaxFrames: 8, // Increased for more complexity
     headTiltAngle: Math.PI / 18,
-    armSwingMaxAngle: Math.PI / 5, // Original value from context
+    armSwingMaxAngle: Math.PI / 5,
     idleRestAngle: Math.PI / 20,
 };
 // Calculate totalHeight based on other properties

@@ -25,8 +25,8 @@ export function handleBallMouseDown(x, y) {
     let delta = new Date().getTime() - ballState.mouseDownTime;
     // Apply impulse if quick succession of mouse moves while button is down
     if (delta < 100 && ballState.px !== -1) { 
-        ballState.ax += (x - ballState.px) * delta / 1000; // Adjusted divisor for smoother control
-        ballState.ay += (y - ballState.py) * delta / 1000; // Adjusted divisor
+        ballState.ax += (x - ballState.px) * (delta / 1000) * ballConfig.sensitivity;
+        ballState.ay += (y - ballState.py) * (delta / 1000) * ballConfig.sensitivity;
     }
     ballState.mouseDownTime = new Date().getTime();
     ballState.px = x;
