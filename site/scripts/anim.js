@@ -22,7 +22,7 @@ class Animator {
         this.targetState = target;
         const totalTime = 500;
         const res = 10;
-        const startState = this.element.innerHTML;
+        const startState = this.element.textContent;
         let commonStartLength = 0;
         while (commonStartLength < startState.length && commonStartLength < target.length && startState[commonStartLength] === target[commonStartLength]) {
             commonStartLength++;
@@ -85,6 +85,8 @@ class SidebarAnimator {
 
         this.profileItems[0].targetAnimation('Profile');
         this.profileItems[1].targetAnimation('Projects');
+        this.profileItems[2].targetAnimation('Skills');
+        this.profileItems[3].targetAnimation('Contact');
     }
 
     /*
@@ -100,6 +102,8 @@ class SidebarAnimator {
         
         this.profileItems[0].targetAnimation('👤');
         this.profileItems[1].targetAnimation('📄');
+        this.profileItems[2].targetAnimation('🛠️');
+        this.profileItems[3].targetAnimation('✉️');
     }
 
     /*
@@ -137,10 +141,14 @@ class SidebarAnimator {
      * @returns Nothing
      */
     constructor() {
-
         this.sidebar = document.getElementById("sidebar");
         this.content = document.getElementById("content");
-        this.profileItems = [new Animator(document.getElementById('profileItem1')), new Animator(document.getElementById('profileItem2'))];
+        this.profileItems = [
+            new Animator(document.getElementById('profileItem1')), 
+            new Animator(document.getElementById('profileItem2')),
+            new Animator(document.getElementById('profileItem3')),
+            new Animator(document.getElementById('profileItem4'))
+        ];
         this.set_sidebar_anim();
     }
 }
