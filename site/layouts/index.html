@@ -11,11 +11,17 @@
         import { setInnerContent } from './contentPage';
         window.loadProfile = loadProfile;
         window.setInnerContent = setInnerContent;
+
+        // Initialize content when the module loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setInnerContent('profile', loadProfile);
+            if (window.onLoadAnim) window.onLoadAnim();
+        });
     </script>
 </head>
 
 
-<body onload="setInnerContent('profile',loadProfile);onLoadAnim();">
+<body>
     <div id="content">
         <div class="header" style="display: flex; align-items: center;">
             <h1 id="title">Ved Suthar</h1>
