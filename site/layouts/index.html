@@ -2,8 +2,24 @@
 <head>
     <meta name="description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer. Discover projects in machine learning, game development, software engineering, and more.">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vedsuthar.com/">
+    <meta property="og:title" content="Ved Suthar - Portfolio">
+    <meta property="og:description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer. Discover projects in ML, Game Dev, and Software Engineering.">
+    <meta property="og:image" content="images/resim.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vedsuthar.com/">
+    <meta property="twitter:title" content="Ved Suthar - Portfolio">
+    <meta property="twitter:description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer.">
+    <meta property="twitter:image" content="images/resim.webp">
+
     <title>Ved Suthar - Portfolio</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style">
     <script src="anim"></script>
     <script type="module">
@@ -17,6 +33,13 @@
             setInnerContent('profile', loadProfile);
             if (window.onLoadAnim) window.onLoadAnim();
         });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw');
+            });
+        }
     </script>
 </head>
 
@@ -40,13 +63,17 @@
             Loading this guys's stuffs, sit tight...
         </div>
     </div>
-    <div id="sidebar">
-        <span onclick="toggleSidebar()" class="clickable">☰</span>
+    <div id="sidebar" role="navigation" aria-label="Main Navigation">
+        <span onclick="toggleSidebar()" onkeypress="if(event.key==='Enter') toggleSidebar()" class="clickable" role="button" aria-label="Toggle Sidebar" tabindex="0">☰</span>
         <br><br>
         <span class="sidebarItem clickable" id="profileItem1"
-            onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)">Profile</span>
+            onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)" 
+            onkeypress="if(event.key==='Enter') { setInnerContent('profile',loadProfile);collapseSidebar(true); }"
+            role="button" tabindex="0" aria-label="Profile">Profile</span>
         <span class="sidebarItem clickable" id="profileItem2"
-            onclick="setInnerContent('projects');collapseSidebar(true)">Projects</span>
+            onclick="setInnerContent('projects');collapseSidebar(true)" 
+            onkeypress="if(event.key==='Enter') { setInnerContent('projects');collapseSidebar(true); }"
+            role="button" tabindex="0" aria-label="Projects">Projects</span>
     </div>
 </body>
 

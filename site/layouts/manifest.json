@@ -1,0 +1,16 @@
+{
+  "name": "Ved Suthar - Portfolio",
+  "short_name": "Ved Suthar",
+  "description": "AI enthusiast and game developer portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e1e1e",
+  "icons": [
+    {
+      "src": "/images/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

@@ -23,6 +23,8 @@ lazy_static! {
         valid_paths.insert("images", "site/images");
         valid_paths.insert("robots.txt", "site/layouts/robots.txt");
         valid_paths.insert("AR_Gravity_Simulator_Privacy_Policy.html", "site/layouts/AR_Gravity_Simulator_Privacy_Policy.html");
+        valid_paths.insert("manifest.json", "site/layouts/manifest.json");
+        valid_paths.insert("sw", "site/scripts/sw.js");
         valid_paths
     };
 }
@@ -52,7 +54,9 @@ async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
 
     // Robust matching: strip extensions if not found
     if !VALID_PATH.contains_key(root_path) {
-        if let Some(stripped) = root_path.strip_suffix(".js").or_else(|| root_path.strip_suffix(".css")) {
+        if let Some(stripped) = root_path.strip_suffix(".js")
+            .or_else(|| root_path.strip_suffix(".css"))
+            .or_else(|| root_path.strip_suffix(".json")) {
             if VALID_PATH.contains_key(stripped) {
                 root_path = stripped;
             }

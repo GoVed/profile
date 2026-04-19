@@ -8,16 +8,18 @@ A minimalist, high-performance portfolio website built with a Rust (Rocket) back
 ## Architecture & Key Files
 
 ### Backend (Rust/Rocket)
-- `src/lib.rs`: Core server logic, routes, and `rocket_builder()`.
+- `src/lib.rs`: Core server logic, routes, and `rocket_builder()`. Handles extension-less routing for `.js`, `.css`, and `.json`.
 - `src/main.rs`: Entry point that launches the Rocket server.
 - `Rocket.toml`: Server configuration (address, port).
 - `tests/integration_test.rs`: Integration tests for backend routes.
 
 ### Frontend (Vanilla JS/CSS)
 - `site/layouts/`: HTML templates.
-  - `index.html`: Main shell with sidebar and content area.
-- `site/styles/style.css`: Modern CSS with dark mode support (prefers-color-scheme).
+  - `index.html`: Main shell with accessibility (ARIA), PWA registration, and SEO meta tags.
+  - `manifest.json`: PWA configuration for mobile installation.
+- `site/styles/style.css`: Modern CSS with dark mode and accessibility focus states.
 - `site/scripts/`:
+  - `sw.js`: Service Worker for offline asset caching (PWA Lite).
   - `contentPage.js`: Handles instant navigation with client-side caching and fade transitions.
   - `profileContent.js`: Manages the gravity ball and "guy" animation, including high-DPI scaling and background task cleanup (`stopProfile`).
   - `ball.js` & `guy.js`: Physics and drawing logic for the animation.
@@ -34,6 +36,7 @@ A minimalist, high-performance portfolio website built with a Rust (Rocket) back
 - **Development**:
   - The project uses a library/binary split to facilitate integration testing.
   - New features should include corresponding integration tests in `tests/`.
+  - CI is automated via GitHub Actions (`.github/workflows/ci.yml`) running tests and clippy.
 
 ## Working with the Canvas
 - The canvas uses a high-DPI scaling system. 

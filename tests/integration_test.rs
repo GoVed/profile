@@ -27,6 +27,15 @@ async fn test_static_files() {
 }
 
 #[rocket::async_test]
+async fn test_manifest_json() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    let response = client.get("/manifest.json").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+    let body = response.into_string().await.unwrap();
+    assert!(body.contains("Ved Suthar"));
+}
+
+#[rocket::async_test]
 async fn test_projects_page() {
     let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
     let response = client.get("/projects").dispatch().await;
@@ -34,3 +43,4 @@ async fn test_projects_page() {
     let body = response.into_string().await.unwrap();
     assert!(body.contains("project-card"));
 }
+
