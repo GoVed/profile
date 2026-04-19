@@ -1,3 +1,25 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --header-bg: rgb(240, 240, 240);
+    --sidebar-bg: rgb(24, 24, 24);
+    --sidebar-text: white;
+    --sidebar-item-bg: rgb(50, 50, 50);
+    --card-shadow: rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --header-bg: #1e1e1e;
+        --card-shadow: rgba(0, 0, 0, 0.5);
+    }
+    .social-icon {
+        filter: invert(1);
+    }
+}
+
 html, body {
     overflow: hidden;
     height: 100%;
@@ -5,19 +27,21 @@ html, body {
     padding: 0%;
     margin: 0%;
     font-family: system-ui;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
-#content{
+#content {
     display: flex;
     flex-flow: column;
-    width:calc(100% - 160px);
+    width: calc(100% - 160px);
     height: 100%;
     transition: width 1s;
     transition-timing-function: ease-in-out;
 }
 
 .header {
-    background-color:rgb(240, 240, 240);
+    background-color: var(--header-bg);
     margin: 0%;
     padding-top: 1px;
     padding-bottom: 1px;
@@ -25,34 +49,32 @@ html, body {
     font-size: 1em;
 }
 
-#sidebar{
+#sidebar {
     position: fixed;
     height: 100%;
     width: 160px;
     top: 0;
     right: 0;
-    background-color:rgb(24, 24, 24);
+    background-color: var(--sidebar-bg);
     overflow-x: hidden;
     text-align: center;
     padding-top: 20px;
-    color: white;
+    color: var(--sidebar-text);
     transition: width 1s;
     transition-timing-function: ease-in-out;
 }
 
-.sidebarItem{
+.sidebarItem {
     display: inline-block;
-    background-color:rgb(50, 50, 50);
+    background-color: var(--sidebar-item-bg);
     margin-top: 5px;
     margin-bottom: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-
     font-size: 1em;
-    width:100%;
-    color: transparent;  
-    text-shadow: 0 0 0 white;
-
+    width: 100%;
+    color: transparent;
+    text-shadow: 0 0 0 var(--sidebar-text);
 }
 
 #innerContent {
@@ -67,8 +89,6 @@ html, body {
     width: 100%;
 }
 
-
-
 #sidebar.collapseSidebar {
     width: 50px;
 }
@@ -76,7 +96,7 @@ html, body {
 #sidebar.expandSidebar {
     width: 160px;
 }
-    
+
 #content.collapseContent {
     width: calc(100% - 160px);
 }
@@ -84,7 +104,7 @@ html, body {
 #content.expandContent {
     width: calc(100% - 50px);
 }
-    
+
 .project-list {
     display: flex;
     flex-wrap: wrap;
@@ -103,11 +123,11 @@ a {
     background-color: #777777;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px var(--card-shadow);
     transition: transform 0.3s ease;
-    background-position: center; 
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: cover; 
+    background-size: cover;
 }
 
 .project-card:hover {
@@ -146,11 +166,10 @@ a {
     border-radius: 10px;
 }
 
-.social-links{
+.social-links {
     margin-right: 15px;
 }
 
 .clickable {
     cursor: pointer;
 }
-    

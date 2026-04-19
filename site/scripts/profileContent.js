@@ -8,6 +8,14 @@ var ctx = null;
 var animationFrameId = null;
 let lastFrameTime = 0;
 
+function getThemeColors() {
+    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return {
+        text: isDarkMode ? '#e0e0e0' : 'black',
+        stroke: isDarkMode ? '#555555' : 'black'
+    };
+}
+
 /**
  * @param Nothing
  * @returns Nothing
@@ -15,8 +23,9 @@ let lastFrameTime = 0;
  * Draws the text on the canvas
  */
 function drawProfileText(){ // Renamed to be more specific
+    const colors = getThemeColors();
     ctx.font = "1.5em Arial";
-    ctx.fillStyle = "black";
+    ctx.fillStyle = colors.text;
     const lines = getLines(ctx, canvasConfig.profileText, canvas.width - 40);
     for (var i = 0; i < lines.length; i++) {
         ctx.fillText(lines[i], 10, 40 + i * 40);
@@ -30,7 +39,9 @@ function drawProfileText(){ // Renamed to be more specific
  * Draws the ground
  */
 function drawGround(){
+    const colors = getThemeColors();
     ctx.beginPath();
+    ctx.strokeStyle = colors.stroke;
     ctx.moveTo(0, canvas.height - canvasConfig.bottomPadding);
     ctx.lineTo(canvas.width, canvas.height - canvasConfig.bottomPadding);
     ctx.stroke();
