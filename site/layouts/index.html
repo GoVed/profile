@@ -69,11 +69,27 @@
         <span class="sidebarItem clickable" id="profileItem1"
             onclick="setInnerContent('profile',loadProfile);collapseSidebar(true)" 
             onkeypress="if(event.key==='Enter') { setInnerContent('profile',loadProfile);collapseSidebar(true); }"
+            onmouseenter="document.getElementById('content').classList.add('preview-peek')"
+            onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Profile">Profile</span>
         <span class="sidebarItem clickable" id="profileItem2"
             onclick="setInnerContent('projects');collapseSidebar(true)" 
             onkeypress="if(event.key==='Enter') { setInnerContent('projects');collapseSidebar(true); }"
+            onmouseenter="document.getElementById('content').classList.add('preview-peek')"
+            onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
             role="button" tabindex="0" aria-label="Projects">Projects</span>
+        <span class="sidebarItem clickable" id="profileItem3"
+            onclick="setInnerContent('skills');collapseSidebar(true)" 
+            onkeypress="if(event.key==='Enter') { setInnerContent('skills');collapseSidebar(true); }"
+            onmouseenter="document.getElementById('content').classList.add('preview-peek')"
+            onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
+            role="button" tabindex="0" aria-label="Skills">Skills</span>
+        <span class="sidebarItem clickable" id="profileItem4"
+            onclick="setInnerContent('contact');collapseSidebar(true)" 
+            onkeypress="if(event.key==='Enter') { setInnerContent('contact');collapseSidebar(true); }"
+            onmouseenter="document.getElementById('content').classList.add('preview-peek')"
+            onmouseleave="document.getElementById('content').classList.remove('preview-peek')"
+            role="button" tabindex="0" aria-label="Contact">Contact</span>
     </div>
 </body>
 

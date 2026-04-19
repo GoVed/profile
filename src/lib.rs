@@ -20,6 +20,8 @@ lazy_static! {
         valid_paths.insert("guy", "site/scripts/guy.js");
         valid_paths.insert("style", "site/styles/style.css");
         valid_paths.insert("projects", "site/layouts/projects.html");
+        valid_paths.insert("skills", "site/layouts/skills.html");
+        valid_paths.insert("contact", "site/layouts/contact.html");
         valid_paths.insert("images", "site/images");
         valid_paths.insert("robots.txt", "site/layouts/robots.txt");
         valid_paths.insert("AR_Gravity_Simulator_Privacy_Policy.html", "site/layouts/AR_Gravity_Simulator_Privacy_Policy.html");

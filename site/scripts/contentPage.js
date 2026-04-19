@@ -3,7 +3,7 @@ import { stopProfile } from './profileContent';
 const cache = new Map();
 
 export async function setInnerContent(page, call_func = null) {
-    const validPages = ['profile', 'projects'];
+    const validPages = ['profile', 'projects', 'skills', 'contact'];
     if (!validPages.includes(page)) {
         console.error("Invalid page requested:", page);
         return;

@@ -36,8 +36,16 @@ html, body {
     flex-flow: column;
     width: calc(100% - 160px);
     height: 100%;
-    transition: width 1s;
+    transition: width 1s, transform 0.4s ease-out, filter 0.4s ease-out;
     transition-timing-function: ease-in-out;
+    transform-origin: left center;
+}
+
+#content.preview-peek {
+    transform: scale(0.98) translateX(-10px);
+    filter: brightness(0.9);
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .header {

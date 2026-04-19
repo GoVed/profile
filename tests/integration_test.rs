@@ -44,3 +44,22 @@ async fn test_projects_page() {
     assert!(body.contains("project-card"));
 }
 
+#[rocket::async_test]
+async fn test_skills_page() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    let response = client.get("/skills").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+    let body = response.into_string().await.unwrap();
+    assert!(body.contains("Tech Stack"));
+}
+
+#[rocket::async_test]
+async fn test_contact_page() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    let response = client.get("/contact").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+    let body = response.into_string().await.unwrap();
+    assert!(body.contains("connect"));
+}
+
+

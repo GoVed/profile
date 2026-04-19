@@ -15,9 +15,10 @@ A minimalist, high-performance portfolio website built with a Rust (Rocket) back
 
 ### Frontend (Vanilla JS/CSS)
 - `site/layouts/`: HTML templates.
-  - `index.html`: Main shell with accessibility (ARIA), PWA registration, and SEO meta tags.
+  - `index.html`: Main shell with accessibility (ARIA), PWA registration, SEO meta tags, and **Predictive Peek** hover logic.
   - `manifest.json`: PWA configuration for mobile installation.
-- `site/styles/style.css`: Modern CSS with dark mode and accessibility focus states.
+  - `skills.html` & `contact.html`: New content sections.
+- `site/styles/style.css`: Modern CSS with dark mode, accessibility focus states, and **preview-peek** transitions.
 - `site/scripts/`:
   - `sw.js`: Service Worker for offline asset caching (PWA Lite).
   - `contentPage.js`: Handles instant navigation with client-side caching and fade transitions.
