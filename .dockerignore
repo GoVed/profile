@@ -1,6 +1,5 @@
 .git
 .vscode
 target
-Dockerfile
-Rocket.toml
-Cargo.lock
+node_modules
+*.skill

@@ -1,0 +1,10 @@
+services:
+  profile:
+    build: .
+    container_name: profile-site
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8000
