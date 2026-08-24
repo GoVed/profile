@@ -1,5 +1,6 @@
 services:
   profile:
+    image: ghcr.io/goved/profile:latest
     build: .
     container_name: profile-site
     restart: unless-stopped
@@ -8,3 +9,4 @@ services:
     environment:
       - ROCKET_ADDRESS=0.0.0.0
       - ROCKET_PORT=8000
+
