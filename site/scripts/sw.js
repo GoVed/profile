@@ -1,4 +1,4 @@
-const CACHE_NAME = 'profile-v1';
+const CACHE_NAME = 'profile-v3';
 const ASSETS = [
   '/',
   '/style',
@@ -10,12 +10,27 @@ const ASSETS = [
   '/ball',
   '/guy',
   '/projects',
+  '/skills',
+  '/contact',
   '/profile'
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName !== CACHE_NAME)
+          .map((cacheName) => caches.delete(cacheName))
+      );
+    }).then(() => self.clients.claim())
   );
 });
 

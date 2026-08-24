@@ -81,8 +81,7 @@ html, body {
     padding-bottom: 10px;
     font-size: 1em;
     width: 100%;
-    color: transparent;
-    text-shadow: 0 0 0 var(--sidebar-text);
+    color: var(--sidebar-text);
     transition: background-color 0.3s ease, border-left 0.3s ease;
     border-left: 4px solid transparent;
 }
@@ -214,5 +213,6 @@ a {
 }
 
 .sidebarItem:focus-visible {
-    text-shadow: 0 0 0 #ff6600;
+    outline: 2px solid #ff6600;
+    outline-offset: -2px;
 }

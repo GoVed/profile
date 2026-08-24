@@ -22,14 +22,15 @@ class Animator {
         this.targetState = target;
         const totalTime = 500;
         const res = 10;
-        const startState = this.element.textContent;
+        const startChars = Array.from(this.element.textContent || '');
+        const targetChars = Array.from(target || '');
         let commonStartLength = 0;
-        while (commonStartLength < startState.length && commonStartLength < target.length && startState[commonStartLength] === target[commonStartLength]) {
+        while (commonStartLength < startChars.length && commonStartLength < targetChars.length && startChars[commonStartLength] === targetChars[commonStartLength]) {
             commonStartLength++;
         }
 
-        const startRemaining = startState.substring(commonStartLength);
-        const targetRemaining = target.substring(commonStartLength);
+        const startRemaining = startChars.slice(commonStartLength);
+        const targetRemaining = targetChars.slice(commonStartLength);
 
         const diffLength = Math.abs(startRemaining.length - targetRemaining.length);
         const cps = diffLength / res;
@@ -39,27 +40,28 @@ class Animator {
                 return;
             }
 
-            let out = startState.substring(0, commonStartLength);
+            let out = startChars.slice(0, commonStartLength).join('');
             const currentDiff = Math.round(cps * i);
 
             if (startRemaining.length > targetRemaining.length) {
                 // Removing characters
-                const currentStartRemaining = Array.from(startRemaining).slice(0, startRemaining.length - currentDiff).join('');
+                const currentStartRemaining = startRemaining.slice(0, startRemaining.length - currentDiff).join('');
                 out += currentStartRemaining;
-                if (out.length < target.length) { // If we removed too many, add back from target
-                    out = target.substring(0, out.length);
+                if (out.length < target.length) {
+                    out = targetChars.slice(0, out.length).join('');
                 }
                 out += getRandomChar(1);
             } else {
                 // Adding characters
-                const currentTargetRemaining = Array.from(targetRemaining).slice(0, currentDiff).join('');
+                const currentTargetRemaining = targetRemaining.slice(0, currentDiff).join('');
                 out += currentTargetRemaining;
-                if (out.length < target.length) { // If we haven't added enough, add a random char
+                if (out.length < target.length) {
                     out += getRandomChar(1);
                 }
             }
-            if (out.length > Math.max(startState.length, target.length))
-                out = Array.from(out).slice(0, Math.max(startState.length, target.length)).join('');
+            if (Array.from(out).length > Math.max(startChars.length, targetChars.length)) {
+                out = Array.from(out).slice(0, Math.max(startChars.length, targetChars.length)).join('');
+            }
 
             this.element.textContent = out;
             await delay(totalTime / res);
