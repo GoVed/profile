@@ -42,6 +42,23 @@ async fn test_projects_page() {
     assert_eq!(response.status(), Status::Ok);
     let body = response.into_string().await.unwrap();
     assert!(body.contains("project-card"));
+    assert!(body.contains("Grand Sim Pro"));
+    assert!(body.contains("OpenInkBridge"));
+    assert!(body.contains("https://goved.github.io/resim/"));
+}
+
+#[rocket::async_test]
+async fn test_project_images() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    
+    let response = client.get("/images/grand_sim_pro.webp").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+
+    let response = client.get("/images/open_ink_bridge.webp").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+
+    let response = client.get("/images/resim.webp").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
 }
 
 #[rocket::async_test]

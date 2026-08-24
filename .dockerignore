@@ -3,3 +3,6 @@
 target
 node_modules
 *.skill
+*.pem
+*.key
+*.crt

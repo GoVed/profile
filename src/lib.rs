@@ -65,14 +65,14 @@ async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
         }
     }
 
-    if root_path == "" || !VALID_PATH.contains_key(root_path){
+    if root_path.is_empty() || !VALID_PATH.contains_key(root_path){
         NamedFile::open("site/layouts/index.html")
         .await
         .map_err(|_| NotFound("Not Found".to_string()))
     }
     else{
         let mut real_path = PathBuf::from(VALID_PATH.get(root_path).unwrap());
-        if rel_path != "" {
+        if !rel_path.is_empty() {
             real_path.push(rel_path);
         }
         NamedFile::open(real_path).await.map_err(|_| NotFound("Not Found".to_string()))    
