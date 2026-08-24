@@ -17,6 +17,39 @@
     <meta property="twitter:description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer.">
     <meta property="twitter:image" content="images/resim.webp">
 
+    <link rel="canonical" href="https://veds.me/">
+
+    <!-- Structured Data (JSON-LD) for Search Engines & Entity Recognition -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ved Suthar",
+      "url": "https://veds.me/",
+      "image": "https://veds.me/images/resim.webp",
+      "jobTitle": "Software Engineer & AI Enthusiast",
+      "sameAs": [
+        "https://github.com/GoVed",
+        "https://www.linkedin.com/in/vedsuthar",
+        "https://www.kaggle.com/vedsuthar",
+        "https://play.google.com/store/apps/details?id=com.VEAM.ARGravitySimulator"
+      ],
+      "knowsAbout": [
+        "Rust",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Deep Neural Networks",
+        "GPGPU & Compute Shaders",
+        "wgpu",
+        "Discrete Event Simulation",
+        "Game Development",
+        "Augmented Reality",
+        "TypeScript",
+        "Python"
+      ]
+    }
+    </script>
+
     <title>Ved Suthar - Portfolio</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="manifest" href="manifest.json">
@@ -57,10 +90,141 @@
 
 
         <div id="innerContent">
-            <section id="profile-page" class="page-section"></section>
-            <section id="projects-page" class="page-section"></section>
-            <section id="skills-page" class="page-section"></section>
-            <section id="contact-page" class="page-section"></section>
+            <section id="profile-page" class="page-section">
+                <canvas id='gravityBall'>
+                    An AI enthusiast who likes to build games. Chasing the butterfly of curosity everyday.
+                    <br>
+                    Something interesting? Day=Gone!
+                </canvas>
+                <link rel="preload" as="image" href="images/grand_sim_pro.webp"/>
+                <link rel="preload" as="image" href="images/open_ink_bridge.webp"/>
+                <link rel="preload" as="image" href="images/resim.webp"/>
+                <link rel="preload" as="image" href="images/ar_gravity_sim.webp"/>
+                <link rel="preload" as="image" href="images/elemental.webp"/>
+                <link rel="preload" as="image" href="images/cyclegan_human_anime.webp"/>
+                <link rel="preload" as="image" href="images/real_time_traffic_simulation.webp"/>
+                <link rel="preload" as="image" href="images/yellow_teal_gradiant.webp"/>
+                <link rel="preload" as="image" href="images/piano_hand_gesture.webp"/>
+                <link rel="preload" as="image" href="images/2d_gravity_sim.webp"/>
+                <link rel="preload" as="image" href="images/night_time_vehicle_detection_output.webp"/>
+            </section>
+            <section id="projects-page" class="page-section">
+                <div class="project-list">
+                    <a href="https://github.com/GoVed/grand-sim-pro" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/grand_sim_pro.webp);">
+                            <h2 class="project-title">Grand Sim Pro</h2>
+                            <p class="project-description">GPU-accelerated survival simulator in Rust & wgpu with compute shaders, 2D spatial CNN vision, Hebbian learning, and AMM micro-economies.</p>
+                        </div>
+                    </a>
+                    <a href="https://goved.github.io/resim/" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/resim.webp);">
+                            <h2 class="project-title">Resim</h2>
+                            <p class="project-description">Discrete-time resource & process simulation engine and visual optimization studio powered by the .reson DSL and multi-core genetic optimizer.</p>
+                        </div>
+                    </a>
+                    <a href="https://github.com/GoVed/OpenInkBridge" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/open_ink_bridge.webp);">
+                            <h2 class="project-title">OpenInkBridge</h2>
+                            <p class="project-description">Open-source SDK & protocol (OIP) for low-latency stylus drawing across E-Ink hardware (Android/Onyx, reMarkable Linux, and Web) with a shared Rust core.</p>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.VEAM.ARGravitySimulator&hl=en_CA" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/ar_gravity_sim.webp);">
+                            <h2 class="project-title">AR Gravity Simulator</h2>
+                            <p class="project-description">Unity AR project for visualizing solar system physics in Augmented Reality. Available on Google Play.</p>
+                        </div>
+                    </a>
+                    <a href="https://github.com/GoVed/elemental" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/elemental.webp);">
+                            <h2 class="project-title">Elemental</h2>
+                            <p class="project-description">An android game featuring resource management and survival mechanics.</p>
+                        </div>
+                    </a>
+                    <a href="https://www.kaggle.com/code/vedsuthar/cyclegan-human-anime-cps-project" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/cyclegan_human_anime.webp);">
+                            <h2 class="project-title">Human to Anime face</h2>
+                            <p class="project-description">CycleGAN implementation for style transformation between human and anime faces.</p>
+                        </div>
+                    </a>
+                    <a href="https://github.com/GoVed/trafast" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/real_time_traffic_simulation.webp);">
+                            <h2 class="project-title">Real-Time Traffic Simulation</h2>
+                            <p class="project-description">Traffic simulation in Rust & Bevy, featuring A* pathfinding and JSON world loading.</p>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/yellow_teal_gradiant.webp);">
+                            <h2 class="project-title">Comparing Feature Extraction</h2>
+                            <p class="project-description">Compared PCA and Backward Elimination for optimizing ML classifiers on a Pokémon dataset.</p>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/piano_hand_gesture.webp);">
+                            <h2 class="project-title">Hand Gesture Piano</h2>
+                            <p class="project-description">Interactive piano controlled by hand gestures using HuskyLens and PubNub.</p>
+                        </div>
+                    </a>
+                    <a href="https://github.com/GoVed/gravitySim" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/2d_gravity_sim.webp);">
+                            <h2 class="project-title">2D Gravity Simulator</h2>
+                            <p class="project-description">Optimized N-body simulator exploring Python, NumPy, JIT, and CUDA acceleration.</p>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="project-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(images/night_time_vehicle_detection_output.webp);">
+                            <h2 class="project-title">Night-Time AV Perception</h2>
+                            <p class="project-description">Deep learning for AV perception in low-light, using YOLOv11, U-Net, and CycleGAN.</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            <section id="skills-page" class="page-section">
+                <div style="padding: 40px; max-width: 800px; margin: auto;">
+                    <h2 style="border-bottom: 2px solid var(--text-color); padding-bottom: 10px;">Expertise & Tech Stack</h2>
+                    
+                    <div style="margin-top: 30px;">
+                        <h3 style="color: #ff6600;">Languages</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="skill-tag">Rust</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">TypeScript / JS</span>
+                            <span class="skill-tag">C# (Unity)</span>
+                            <span class="skill-tag">WGSL / GLSL</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <h3 style="color: #ff6600;">Frameworks & Graphics</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="skill-tag">wgpu (Compute Shaders)</span>
+                            <span class="skill-tag">Rocket / Axum / Tokio</span>
+                            <span class="skill-tag">Bevy / Macroquad</span>
+                            <span class="skill-tag">PyTorch / NumPy</span>
+                            <span class="skill-tag">React / Node.js</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <h3 style="color: #ff6600;">Tools & Platforms</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="skill-tag">Unity AR Foundation</span>
+                            <span class="skill-tag">Android Development</span>
+                            <span class="skill-tag">Docker / Multi-stage Builds</span>
+                            <span class="skill-tag">CI/CD (GitHub Actions)</span>
+                            <span class="skill-tag">Git / Linux</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="contact-page" class="page-section">
+                <div style="padding: 40px; text-align: center;">
+                    <h2>Let's connect</h2>
+                    <p>Always open for interesting projects or AI discussions.</p>
+                    <div style="margin-top: 30px;">
+                        <a href="mailto:vedhsuthardeveloper@gmail.com" style="color: #ff6600; font-size: 1.2em; text-decoration: none; border: 2px solid #ff6600; padding: 10px 25px; border-radius: 5px; transition: all 0.3s ease;">Say Hello</a>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
     <div id="sidebar" role="navigation" aria-label="Main Navigation">

@@ -7,8 +7,15 @@ async fn test_root_path() {
     let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
     let response = client.get("/").dispatch().await;
     assert_eq!(response.status(), Status::Ok);
-    let body = response.into_string().await;
-    assert!(body.unwrap().contains("Ved Suthar"));
+    let body = response.into_string().await.unwrap();
+    assert!(body.contains("Ved Suthar"));
+    assert!(body.contains("https://schema.org"));
+    assert!(body.contains("\"@type\": \"Person\""));
+    assert!(body.contains("https://veds.me/"));
+    assert!(body.contains("Grand Sim Pro"));
+    assert!(body.contains("OpenInkBridge"));
+    assert!(body.contains("Resim"));
+    assert!(body.contains("Tech Stack"));
 }
 
 #[rocket::async_test]

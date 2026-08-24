@@ -6,16 +6,17 @@ export async function initAllPages() {
     for (const page of pages) {
         const container = document.getElementById(`${page}-page`);
         if (container) {
-            try {
-                const response = await fetch(page);
-                const text = await response.text();
-                container.innerHTML = text;
-                
-                if (page === 'profile') {
-                    loadProfile();
+            if (!container.innerHTML.trim()) {
+                try {
+                    const response = await fetch(page);
+                    const text = await response.text();
+                    container.innerHTML = text;
+                } catch (error) {
+                    console.error(`Failed to load ${page}:`, error);
                 }
-            } catch (error) {
-                console.error(`Failed to load ${page}:`, error);
+            }
+            if (page === 'profile') {
+                loadProfile();
             }
         }
     }
