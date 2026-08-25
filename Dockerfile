@@ -10,7 +10,7 @@ RUN mkdir src tests && \
     echo "fn main() {}" > src/main.rs && \
     echo "fn main() {}" > tests/integration_test.rs && \
     cargo build --release && \
-    rm -rf src tests
+    rm -rf src tests target/release/deps/profile* target/release/deps/libprofile* target/release/profile*
 
 # Copy actual source files and build the release binary
 COPY src ./src
