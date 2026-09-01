@@ -1,23 +1,60 @@
 <!DOCTYPE html>
 <head>
-    <meta name="description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer. Discover projects in machine learning, game development, software engineering, and more.">
+    <meta name="description" content="Explore the portfolio of Ved Suthar — GPU compute shaders, Rust discrete simulations, wgpu graphics, and machine learning systems.">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn / Discord -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ved Suthar - Systems & AI Portfolio">
     <meta property="og:url" content="https://veds.me/">
-    <meta property="og:title" content="Ved Suthar - Portfolio">
-    <meta property="og:description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer. Discover projects in ML, Game Dev, and Software Engineering.">
-    <meta property="og:image" content="images/resim.webp">
+    <meta property="og:title" content="Ved Suthar | Software Engineer, AI & Interactive Systems">
+    <meta property="og:description" content="Explore the portfolio of Ved Suthar — GPU compute shaders, Rust discrete simulations, wgpu graphics, and machine learning systems.">
+    <meta property="og:image" content="https://veds.me/images/grand_sim_pro.webp">
+    <meta property="og:image:secure_url" content="https://veds.me/images/grand_sim_pro.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ved Suthar - Interactive Portfolio & Systems Engineering">
+    <meta property="og:locale" content="en_US">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://veds.me/">
-    <meta property="twitter:title" content="Ved Suthar - Portfolio">
-    <meta property="twitter:description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer.">
-    <meta property="twitter:image" content="images/resim.webp">
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://veds.me/">
+    <meta name="twitter:title" content="Ved Suthar | Software Engineer, AI & Interactive Systems">
+    <meta name="twitter:description" content="GPU compute shaders, Rust discrete simulations, wgpu graphics, and machine learning systems.">
+    <meta name="twitter:image" content="https://veds.me/images/grand_sim_pro.webp">
+    <meta name="twitter:image:alt" content="Ved Suthar - Interactive Portfolio & Systems Engineering">
+    <meta name="twitter:creator" content="@GoVed">
 
     <link rel="canonical" href="https://veds.me/">
+
+    <!-- Speculation Rules API for 0ms Instant Pre-rendering & Pre-fetching -->
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": ["/skills", "/projects", "/contact", "/profile"],
+          "eagerness": "moderate"
+        }
+      ],
+      "prefetch": [
+        {
+          "source": "list",
+          "urls": ["/skills", "/projects", "/contact", "/profile", "/style", "/anim", "/terminal", "/bulb", "/haptics"],
+          "eagerness": "immediate"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Browser Fallback Preloading for 0ms Navigation -->
+    <link rel="prefetch" href="/skills" as="document">
+    <link rel="prefetch" href="/projects" as="document">
+    <link rel="prefetch" href="/contact" as="document">
+    <link rel="prefetch" href="/profile" as="document">
 
     <!-- Structured Data (JSON-LD) for Search Engines & Entity Recognition -->
     <script type="application/ld+json">

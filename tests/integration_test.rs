@@ -12,6 +12,9 @@ async fn test_root_path() {
     assert!(body.contains("https://schema.org"));
     assert!(body.contains("\"@type\": \"Person\""));
     assert!(body.contains("https://veds.me/"));
+    assert!(body.contains("speculationrules"));
+    assert!(body.contains("og:image"));
+    assert!(body.contains("summary_large_image"));
     assert!(body.contains("Grand Sim Pro"));
     assert!(body.contains("OpenInkBridge"));
     assert!(body.contains("Resim"));
