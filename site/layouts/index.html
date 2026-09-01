@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta name="description" content="Explore the portfolio of Ved Suthar, an AI enthusiast and game developer. Discover projects in machine learning, game development, software engineering, and more.">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -57,10 +57,17 @@
     <script src="anim"></script>
     <script type="module">
         import { initAllPages, scrollToPage } from './contentPage';
+        import { initTerminal, toggleTerminal, openTerminal, closeTerminal } from './terminal';
+        import { Haptics } from './haptics';
         window.scrollToPage = scrollToPage;
+        window.toggleTerminal = toggleTerminal;
+        window.openTerminal = openTerminal;
+        window.closeTerminal = closeTerminal;
+        window.Haptics = Haptics;
 
         document.addEventListener('DOMContentLoaded', () => {
             initAllPages();
+            initTerminal();
             if (window.onLoadAnim) window.onLoadAnim();
         });
 
@@ -78,8 +85,12 @@
     <div id="content">
         <div class="header" style="display: flex; align-items: center;">
             <h1 id="title">Ved Suthar</h1>
+            <button id="terminal-launcher" class="terminal-launcher-btn" onclick="window.toggleTerminal && window.toggleTerminal()" title="Toggle CLI Terminal (Press ` or ~)" aria-label="Toggle Interactive CLI Terminal" style="margin-left: auto;">
+                <span class="term-btn-icon">&gt;_</span>
+                <span class="term-btn-label">Terminal</span>
+            </button>
             <a href="https://www.linkedin.com/in/vedsuthar" target="_blank" rel="noopener noreferrer"
-                 style="margin-left: auto;" class="social-links">
+                 class="social-links">
                 <img src="images/InBug-Black.webp" alt="LinkedIn Profile" width="50" height="46.369047619" class="social-icon">
             </a>
             <a href="https://github.com/GoVed" target="_blank" rel="noopener noreferrer"
@@ -90,9 +101,31 @@
 
 
         <div id="innerContent">
-            <section id="profile-page" class="page-section">
+            <section id="profile-page" class="page-section" style="position: relative;">
+                <div id="profile-hud" class="game-hud">
+                    <div class="hud-stats">
+                        <div class="hud-stat-pill">
+                            <span class="hud-label">Score</span>
+                            <span id="hud-score" class="hud-value">0</span>
+                        </div>
+                        <div class="hud-stat-pill combo-pill">
+                            <span class="hud-label">Streak</span>
+                            <span id="hud-combo" class="hud-value">1x</span>
+                        </div>
+                        <div class="hud-stat-pill">
+                            <span class="hud-label">Best</span>
+                            <span id="hud-high-score" class="hud-value">0</span>
+                        </div>
+                    </div>
+                    <div class="hud-controls">
+                        <button id="hud-gravity-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.cycleGravity()" title="Toggle Gravity (Earth / Zero-G / Antigravity)">🌍 Gravity: 1G</button>
+                        <button id="hud-ball-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.spawnBall()" title="Spawn extra bouncing ball">➕ Ball</button>
+                        <button id="hud-sound-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.toggleSound()" title="Toggle retro sound effects">🔇 Sound: OFF</button>
+                        <button id="hud-reset-btn" class="hud-btn hud-btn-icon" onclick="window.govedGame && window.govedGame.resetGame()" title="Reset Game">🔄</button>
+                    </div>
+                </div>
                 <canvas id='gravityBall'>
-                    An AI enthusiast who likes to build games. Chasing the butterfly of curosity everyday.
+                    An AI enthusiast who likes to build games. Chasing the butterfly of curiosity everyday.
                     <br>
                     Something interesting? Day=Gone!
                 </canvas>

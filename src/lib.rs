@@ -18,6 +18,11 @@ lazy_static! {
         valid_paths.insert("utils", "site/scripts/utils.js");
         valid_paths.insert("ball", "site/scripts/ball.js");
         valid_paths.insert("guy", "site/scripts/guy.js");
+        valid_paths.insert("audio", "site/scripts/audio.js");
+        valid_paths.insert("particles", "site/scripts/particles.js");
+        valid_paths.insert("terminal", "site/scripts/terminal.js");
+        valid_paths.insert("haptics", "site/scripts/haptics.js");
+        valid_paths.insert("bulb", "site/scripts/bulb.js");
         valid_paths.insert("style", "site/styles/style.css");
         valid_paths.insert("projects", "site/layouts/projects.html");
         valid_paths.insert("skills", "site/layouts/skills.html");

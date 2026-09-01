@@ -216,3 +216,696 @@ a {
     outline: 2px solid #ff6600;
     outline-offset: -2px;
 }
+
+/* Mini-Game HUD & Controls */
+.game-hud {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.hud-stats, .hud-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    pointer-events: auto;
+}
+
+.hud-stat-pill {
+    background: rgba(240, 240, 240, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 5px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    user-select: none;
+    transition: all 0.25s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .hud-stat-pill {
+        background: rgba(30, 30, 30, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.hud-label {
+    opacity: 0.65;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.hud-value {
+    font-weight: bold;
+    color: #ff6600;
+    font-size: 1.05em;
+    min-width: 12px;
+}
+
+.combo-pill.combo-active {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.15);
+    animation: comboPulse 0.8s infinite alternate ease-in-out;
+}
+
+.combo-pill.combo-active .hud-value {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes comboPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+.hud-btn {
+    background: rgba(240, 240, 240, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: var(--text-color);
+    border-radius: 18px;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .hud-btn {
+        background: rgba(35, 35, 35, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+}
+
+.hud-btn:hover {
+    background: #ff6600;
+    color: #ffffff;
+    border-color: #ff6600;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+}
+
+.hud-btn:active {
+    transform: translateY(1px);
+}
+
+.hud-btn.active {
+    border-color: #ff6600;
+    color: #ff6600;
+}
+
+.hud-btn-icon {
+    padding: 6px 10px;
+    font-size: 0.95em;
+}
+
+@media (max-width: 600px) {
+    .game-hud {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        gap: 6px;
+    }
+    .hud-stat-pill {
+        padding: 4px 10px;
+        font-size: 0.75em;
+    }
+    .hud-btn {
+        padding: 5px 8px;
+        font-size: 0.75em;
+    }
+}
+
+/* GNOME-Style Terminal Launcher Button */
+.terminal-launcher-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #282828;
+    color: #f6f8fa;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: 'Red Hat Mono', 'Liberation Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.terminal-launcher-btn:hover {
+    background: #3584e4;
+    color: #ffffff;
+    border-color: #3584e4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(53, 132, 228, 0.35);
+}
+
+.term-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 2px 5px;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.terminal-launcher-btn:hover .term-btn-icon {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+/* GNOME / Adwaita Terminal Modal */
+.terminal-drawer.gnome-terminal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.94);
+    width: 92%;
+    max-width: 820px;
+    height: 560px;
+    max-height: 85vh;
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75), 0 0 1px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Red Hat Mono', 'Liberation Mono', 'DejaVu Sans Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.terminal-drawer.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.term-header.gnome-header {
+    background: #303030;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    user-select: none;
+    height: 38px;
+}
+
+.term-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.term-tab-pill {
+    background: #1e1e1e;
+    color: #e6e6e6;
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    letter-spacing: 0.3px;
+}
+
+.term-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gnome-close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #e6e6e6;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+}
+
+.gnome-close-btn:hover {
+    background: #e01b24;
+    color: #ffffff;
+}
+
+.gnome-close-btn:active {
+    transform: scale(0.92);
+}
+
+.term-close-hint {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75em;
+}
+
+.term-body.gnome-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 20px;
+    color: #f6f8fa;
+    font-size: 0.88em;
+    line-height: 1.55;
+    background: #1e1e1e;
+    word-break: break-word;
+}
+
+.term-body::-webkit-scrollbar {
+    width: 7px;
+}
+
+.term-body::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.term-body::-webkit-scrollbar-thumb {
+    background: #333940;
+    border-radius: 4px;
+}
+
+.term-body::-webkit-scrollbar-thumb:hover {
+    background: #3584e4;
+}
+
+.term-welcome {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+.term-line {
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+
+.term-line.term-command {
+    margin-top: 10px;
+    color: #f6f8fa;
+}
+
+.term-input-bar.gnome-input-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: #242424;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+}
+
+/* Prompt Styling: [ved@portfolio ~]$ */
+.term-gnome-prompt {
+    color: #ffffff;
+    font-weight: bold;
+    user-select: none;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.prompt-user { color: #62a0ea; font-weight: bold; }
+.prompt-at { color: #8c959f; }
+.prompt-host { color: #3584e4; font-weight: bold; }
+.prompt-path { color: #33d17a; font-weight: bold; }
+
+.term-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+/* Neofetch Layout */
+.term-fetch-container {
+    display: flex;
+    gap: 24px;
+    margin: 8px 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.term-fetch-logo {
+    font-family: monospace;
+    font-size: 0.92em;
+    line-height: 1.15;
+    white-space: pre;
+    user-select: none;
+}
+
+.term-fetch-info {
+    font-family: inherit;
+    font-size: 0.88em;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.gnome-blue { color: #3584e4; }
+
+/* Colors & Badges */
+.term-gnome-blue { color: #62a0ea; }
+.term-highlight { color: #f5c211; }
+.term-cyan { color: #33c7de; }
+.term-dim { color: #8c959f; }
+.term-success { color: #33d17a; }
+.term-error { color: #e01b24; }
+.term-link { color: #62a0ea; text-decoration: underline; }
+.term-link:hover { color: #ffffff; }
+.term-section-title { color: #f5c211; font-weight: bold; display: block; margin-top: 8px; margin-bottom: 2px; }
+.font-bold { font-weight: bold; }
+
+.term-box {
+    margin: 8px 0;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.term-box-pre {
+    font-family: 'Red Hat Mono', 'Liberation Mono', 'DejaVu Sans Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.42;
+    margin: 6px 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    overflow-x: hidden;
+}
+
+.term-fetch-pre {
+    font-family: 'Red Hat Mono', 'Liberation Mono', 'DejaVu Sans Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.35;
+    margin: 8px 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    overflow-x: hidden;
+}
+
+.term-hire-card {
+    line-height: 1.3;
+    letter-spacing: 0px;
+    white-space: pre;
+    overflow-x: hidden;
+}
+
+.term-pre {
+    background: #14171a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: #e6e6e6;
+    font-family: inherit;
+    overflow-x: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 6px 0;
+}
+
+.term-code {
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #d1d5db;
+}
+
+.term-table-header {
+    background: #2d3238;
+    color: #ffffff;
+    font-weight: bold;
+    display: block;
+    padding: 2px 4px;
+    margin-top: 4px;
+}
+
+.term-cow {
+    color: #62a0ea;
+    margin: 4px 0;
+}
+
+.term-quick-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #181818;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.term-quick-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.term-quick-chip {
+    background: rgba(255, 255, 255, 0.06);
+    color: #62a0ea;
+    border: 1px solid rgba(98, 160, 234, 0.25);
+    border-radius: 12px;
+    padding: 3px 9px;
+    font-family: inherit;
+    font-size: 0.76em;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.term-quick-chip:hover, .term-quick-chip:active {
+    background: #3584e4;
+    color: #ffffff;
+    border-color: #3584e4;
+}
+
+/* Custom Themes activated via Terminal */
+body.theme-matrix {
+    --bg-color: #020a04;
+    --text-color: #00ff66;
+    --header-bg: #041408;
+    --sidebar-bg: #031006;
+}
+
+body.theme-matrix #gravityBall {
+    filter: hue-rotate(90deg);
+}
+
+body.theme-cyberpunk {
+    --bg-color: #0b001a;
+    --text-color: #00f0ff;
+    --header-bg: #190033;
+    --sidebar-bg: #120024;
+}
+
+body.theme-cyberpunk #gravityBall {
+    filter: hue-rotate(240deg) saturate(150%);
+}
+
+/* ==========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVENESS (PHONES & TABLETS)
+   ========================================================================== */
+
+#gravityBall {
+    touch-action: none;
+}
+
+@media (max-width: 768px) {
+    /* Header on Mobile */
+    .header {
+        padding: 8px 12px;
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+
+    #title {
+        font-size: 1.3em;
+        margin: 0;
+    }
+
+    .terminal-launcher-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+        margin-right: 8px;
+    }
+
+    .social-links {
+        margin-right: 8px;
+    }
+
+    .social-icon {
+        width: 32px;
+        height: auto;
+    }
+
+    /* Content & Sidebar Layout */
+    #content.collapseContent {
+        width: calc(100% - 130px);
+    }
+    #sidebar.expandSidebar {
+        width: 130px;
+    }
+    #content.expandContent {
+        width: calc(100% - 44px);
+    }
+    #sidebar.collapseSidebar {
+        width: 44px;
+    }
+
+    .sidebarItem {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        min-height: 44px;
+    }
+
+    /* Project Cards on Tablets/Mobiles */
+    .project-card {
+        width: calc(100% - 32px);
+        max-width: 340px;
+        height: auto;
+        min-height: 200px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Game HUD on Small Screens */
+    .game-hud {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        gap: 5px;
+    }
+
+    .hud-stats, .hud-controls {
+        gap: 4px;
+    }
+
+    .hud-stat-pill {
+        padding: 3px 8px;
+        font-size: 0.72em;
+    }
+
+    .hud-btn {
+        padding: 4px 7px;
+        font-size: 0.72em;
+        min-height: 28px;
+    }
+
+    /* Interactive Terminal on Mobile */
+    .terminal-drawer.gnome-terminal {
+        width: 95%;
+        max-width: 95vw;
+        height: 86vh;
+        max-height: 90vh;
+        border-radius: 10px;
+    }
+
+    .term-header.gnome-header {
+        padding: 4px 10px;
+        height: 34px;
+    }
+
+    .gnome-close-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .term-body.gnome-body {
+        padding: 12px 14px;
+        font-size: 0.82em;
+        line-height: 1.45;
+    }
+
+    .term-input-bar.gnome-input-bar {
+        padding: 8px 12px;
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+
+    .term-input {
+        font-size: 16px; /* Prevents iOS auto-zoom on input focus */
+    }
+
+    .term-fetch-container {
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+    }
+
+    .term-fetch-logo {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 420px) {
+    #title {
+        font-size: 1.15em;
+    }
+
+    .terminal-launcher-btn .term-btn-label {
+        display: none;
+    }
+
+    .terminal-launcher-btn {
+        padding: 5px 8px;
+        margin-right: 6px;
+    }
+
+    .social-links {
+        margin-right: 4px;
+    }
+
+    .social-icon {
+        width: 28px;
+        height: auto;
+    }
+}
+
+

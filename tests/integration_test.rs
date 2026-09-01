@@ -22,9 +22,12 @@ async fn test_root_path() {
 async fn test_static_files() {
     let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
     
-    // Test a valid static file mapping (style)
-    let response = client.get("/style").dispatch().await;
-    assert_eq!(response.status(), Status::Ok);
+    // Test static file mappings for scripts & styles
+    let routes = vec!["/style", "/ball", "/guy", "/audio", "/particles", "/terminal", "/haptics", "/bulb", "/profileContent", "/config"];
+    for route in routes {
+        let response = client.get(route).dispatch().await;
+        assert_eq!(response.status(), Status::Ok, "Failed for route {}", route);
+    }
 
     // Test a path that should forward to index (fallback behavior in static_files)
     let response = client.get("/invalid_path_that_should_fallback").dispatch().await;

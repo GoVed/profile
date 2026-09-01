@@ -1,4 +1,4 @@
-const CACHE_NAME = 'profile-v3';
+const CACHE_NAME = 'profile-v20';
 const ASSETS = [
   '/',
   '/style',
@@ -9,10 +9,16 @@ const ASSETS = [
   '/utils',
   '/ball',
   '/guy',
+  '/audio',
+  '/particles',
+  '/terminal',
+  '/haptics',
+  '/bulb',
   '/projects',
   '/skills',
   '/contact',
-  '/profile'
+  '/profile',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -34,10 +40,21 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Network-First with Cache Fallback for instant updates during development and reliable offline PWA
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });

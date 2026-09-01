@@ -1,4 +1,5 @@
 import { loadProfile, stopProfile } from './profileContent';
+import { Haptics } from './haptics';
 
 const pages = ['profile', 'projects', 'skills', 'contact'];
 
@@ -59,6 +60,7 @@ function setupScrollObserver() {
 }
 
 export function scrollToPage(id) {
+    Haptics.light();
     const el = document.getElementById(id);
     if (el) {
         el.scrollIntoView({ behavior: 'smooth' });

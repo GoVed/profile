@@ -1,5 +1,27 @@
+<div id="profile-hud" class="game-hud">
+    <div class="hud-stats">
+        <div class="hud-stat-pill">
+            <span class="hud-label">Score</span>
+            <span id="hud-score" class="hud-value">0</span>
+        </div>
+        <div class="hud-stat-pill combo-pill">
+            <span class="hud-label">Streak</span>
+            <span id="hud-combo" class="hud-value">1x</span>
+        </div>
+        <div class="hud-stat-pill">
+            <span class="hud-label">Best</span>
+            <span id="hud-high-score" class="hud-value">0</span>
+        </div>
+    </div>
+    <div class="hud-controls">
+        <button id="hud-gravity-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.cycleGravity()" title="Toggle Gravity (Earth / Zero-G / Antigravity)">🌍 Gravity: 1G</button>
+        <button id="hud-ball-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.spawnBall()" title="Spawn extra bouncing ball">➕ Ball</button>
+        <button id="hud-sound-btn" class="hud-btn" onclick="window.govedGame && window.govedGame.toggleSound()" title="Toggle retro sound effects">🔇 Sound: OFF</button>
+        <button id="hud-reset-btn" class="hud-btn hud-btn-icon" onclick="window.govedGame && window.govedGame.resetGame()" title="Reset Game">🔄</button>
+    </div>
+</div>
 <canvas id='gravityBall'>
-    An AI enthusiast who likes to build games. Chasing the butterfly of curosity everyday.
+    An AI enthusiast who likes to build games. Chasing the butterfly of curiosity everyday.
     <br>
     Something interesting? Day=Gone!
 </canvas>
