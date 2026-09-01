@@ -130,6 +130,7 @@ const COMMANDS = {
     'cowsay': { desc: 'Have the ASCII cow deliver custom wisdom', usage: 'cowsay <text>' },
     'fortune': { desc: 'Print a random tech quote or fortune', usage: 'fortune' },
     'haptics': { desc: 'Toggle or check mobile haptic feedback status', usage: 'haptics [on|off]' },
+    'status': { desc: 'Query live backend server health & uptime telemetry', usage: 'status' },
     'sudo': { desc: 'Execute command with elevated privileges', usage: 'sudo <command>' },
     'hire': { desc: 'Recruiter fast-track & direct email contact', usage: 'hire' },
     'clear': { desc: 'Clear the terminal output screen', usage: 'clear' },
@@ -901,6 +902,41 @@ ${botBar}
                 Haptics.medium();
                 printLine(`[sudo] password for ved: \n<span class="term-error">Access granted. Try "sudo hire" 😉</span>`);
             }
+            break;
+        }
+
+        case 'status':
+        case 'health':
+        case 'healthz':
+        case 'uptime': {
+            printLine('<span class="term-dim">Connecting to backend telemetry endpoint...</span>');
+            fetch('/api/status')
+                .then(r => r.json())
+                .then(data => {
+                    const upHours = Math.floor(data.uptime_seconds / 3600);
+                    const upMins = Math.floor((data.uptime_seconds % 3600) / 60);
+                    const upSecs = data.uptime_seconds % 60;
+                    const upStr = `${upHours > 0 ? upHours + 'h ' : ''}${upMins}m ${upSecs}s`;
+                    
+                    if (mobile) {
+                        printLine(`<pre class="term-box-pre"><span class="term-gnome-blue font-bold">─── SERVER TELEMETRY ───</span>
+<span class="term-cyan font-bold">Status:</span>   <span class="term-highlight">● ${data.status.toUpperCase()}</span>
+<span class="term-cyan font-bold">Service:</span>  ${data.service} v${data.version}
+<span class="term-cyan font-bold">Uptime:</span>   ${upStr}
+<span class="term-cyan font-bold">Engine:</span>   ${data.runtime}
+<span class="term-cyan font-bold">Security:</span> CSP, HSTS, SAMEORIGIN</pre>`);
+                    } else {
+                        printLine(`<pre class="term-box-pre"><span class="term-gnome-blue font-bold">─── BACKEND TELEMETRY & HEALTH STATUS ────────────────────────────────</span>
+<span class="term-cyan font-bold">Server Health:</span>    <span class="term-highlight">● ${data.status.toUpperCase()}</span>
+<span class="term-cyan font-bold">Microservice:</span>     ${data.service} v${data.version}
+<span class="term-cyan font-bold">Process Uptime:</span>   ${upStr} (${data.uptime_seconds} seconds)
+<span class="term-cyan font-bold">Runtime Engine:</span>   ${data.runtime}
+<span class="term-cyan font-bold">Security Hardening:</span> Content-Security-Policy, HSTS, nosniff, SameOrigin</pre>`);
+                    }
+                })
+                .catch(() => {
+                    printLine('<pre class="term-box-pre"><span class="term-dim">Backend telemetry unreachable or running offline client PWA mode.</span></pre>');
+                });
             break;
         }
 

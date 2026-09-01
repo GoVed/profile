@@ -1,12 +1,19 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate lazy_static;
+
 use rocket::response::status::NotFound;
 use rocket::fs::NamedFile;
+use rocket::fairing::{Fairing, Info, Kind};
+use rocket::http::{ContentType, Header};
+use rocket::{Request, Response};
 use std::path::PathBuf;
 use std::collections::HashMap;
+use std::time::Instant;
 
-// This is a static hashmap that maps the path of the request to the path of the file
 lazy_static! {
+    static ref START_TIME: Instant = Instant::now();
+
+    // This is a static hashmap that maps the path of the request to the path of the file
     static ref VALID_PATH: HashMap<&'static str, &'static str> = {
         let mut valid_paths = HashMap::new();
         valid_paths.insert("index", "site/layouts/index.html");
@@ -34,6 +41,61 @@ lazy_static! {
         valid_paths.insert("sw", "site/scripts/sw.js");
         valid_paths
     };
+}
+
+/// Fairing to attach production security headers to all responses
+pub struct SecurityHeaders;
+
+#[rocket::async_trait]
+impl Fairing for SecurityHeaders {
+    fn info(&self) -> Info {
+        Info {
+            name: "Security Headers Fairing",
+            kind: Kind::Response,
+        }
+    }
+
+    async fn on_response<'r>(&self, _req: &'r Request<'_>, res: &mut Response<'r>) {
+        res.set_header(Header::new("X-Frame-Options", "SAMEORIGIN"));
+        res.set_header(Header::new("X-Content-Type-Options", "nosniff"));
+        res.set_header(Header::new("X-XSS-Protection", "1; mode=block"));
+        res.set_header(Header::new("Referrer-Policy", "strict-origin-when-cross-origin"));
+        res.set_header(Header::new("Permissions-Policy", "camera=(), microphone=(), geolocation=()"));
+        res.set_header(Header::new("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload"));
+        res.set_header(Header::new(
+            "Content-Security-Policy",
+            "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; manifest-src 'self'; worker-src 'self';",
+        ));
+    }
+}
+
+/// Basic, safe healthcheck endpoint (for Docker, uptime monitors, and reverse proxies)
+#[get("/healthz")]
+fn healthz() -> (ContentType, String) {
+    let uptime = START_TIME.elapsed().as_secs();
+    (
+        ContentType::JSON,
+        format!("{{\"status\":\"ok\",\"service\":\"profile\",\"uptime_seconds\":{}}}", uptime),
+    )
+}
+
+/// Health alias
+#[get("/health")]
+fn health_alias() -> (ContentType, String) {
+    healthz()
+}
+
+/// Sanitized server status & telemetry endpoint (no sensitive host internals exposed)
+#[get("/api/status")]
+fn api_status() -> (ContentType, String) {
+    let uptime = START_TIME.elapsed().as_secs();
+    (
+        ContentType::JSON,
+        format!(
+            "{{\"status\":\"operational\",\"service\":\"profile\",\"version\":\"0.1.0\",\"uptime_seconds\":{},\"runtime\":\"Rust (Rocket 0.5)\",\"health\":\"optimal\"}}",
+            uptime
+        ),
+    )
 }
 
 #[get("/")]
@@ -86,5 +148,7 @@ async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
 }
 
 pub fn rocket_builder() -> rocket::Rocket<rocket::Build> {
-    rocket::build().mount("/", routes![root,static_files])
+    rocket::build()
+        .attach(SecurityHeaders)
+        .mount("/", routes![root, healthz, health_alias, api_status, static_files])
 }

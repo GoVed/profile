@@ -1,4 +1,4 @@
-const CACHE_NAME = 'profile-v20';
+const CACHE_NAME = 'profile-v21';
 const ASSETS = [
   '/',
   '/style',

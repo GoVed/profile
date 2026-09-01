@@ -89,4 +89,40 @@ async fn test_contact_page() {
     assert!(body.contains("connect"));
 }
 
+#[rocket::async_test]
+async fn test_healthz_and_telemetry() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    
+    let healthz_resp = client.get("/healthz").dispatch().await;
+    assert_eq!(healthz_resp.status(), Status::Ok);
+    let body = healthz_resp.into_string().await.unwrap();
+    assert!(body.contains("\"status\":\"ok\""));
+    assert!(body.contains("\"service\":\"profile\""));
+    assert!(body.contains("uptime_seconds"));
+
+    let health_resp = client.get("/health").dispatch().await;
+    assert_eq!(health_resp.status(), Status::Ok);
+
+    let status_resp = client.get("/api/status").dispatch().await;
+    assert_eq!(status_resp.status(), Status::Ok);
+    let status_body = status_resp.into_string().await.unwrap();
+    assert!(status_body.contains("\"status\":\"operational\""));
+    assert!(status_body.contains("\"runtime\":\"Rust (Rocket 0.5)\""));
+}
+
+#[rocket::async_test]
+async fn test_security_headers() {
+    let client = Client::tracked(rocket_builder()).await.expect("valid rocket instance");
+    let response = client.get("/").dispatch().await;
+    assert_eq!(response.status(), Status::Ok);
+
+    let headers = response.headers();
+    assert_eq!(headers.get_one("X-Frame-Options"), Some("SAMEORIGIN"));
+    assert_eq!(headers.get_one("X-Content-Type-Options"), Some("nosniff"));
+    assert_eq!(headers.get_one("X-XSS-Protection"), Some("1; mode=block"));
+    assert_eq!(headers.get_one("Referrer-Policy"), Some("strict-origin-when-cross-origin"));
+    assert!(headers.get_one("Content-Security-Policy").is_some());
+    assert!(headers.get_one("Strict-Transport-Security").is_some());
+}
+
 
